@@ -13,9 +13,20 @@ export function registerReadTools(server) {
     async ({ folder, limit }) => {
       const client = await createImapClient();
       await client.connect();
-      const messages = [];
       await client.mailboxOpen(folder);
-      for await (const msg of client.fetch('1:*', { envelope: true })) {
+
+      // Get all UIDs (lightweight — no body download), take the last N
+      const allUids = await client.search({ all: true }, { uid: true });
+      const recentUids = allUids.slice(-limit);
+
+      if (recentUids.length === 0) {
+        await client.logout();
+        return { content: [{ type: 'text', text: '[]' }] };
+      }
+
+      const messages = [];
+      const uidRange = recentUids.join(',');
+      for await (const msg of client.fetch(uidRange, { envelope: true }, { uid: true })) {
         messages.push({
           uid: msg.uid,
           from: msg.envelope.from?.[0]?.address,
@@ -24,8 +35,7 @@ export function registerReadTools(server) {
         });
       }
       await client.logout();
-      const recent = messages.slice(-limit).reverse();
-      return { content: [{ type: 'text', text: JSON.stringify(recent, null, 2) }] };
+      return { content: [{ type: 'text', text: JSON.stringify(messages.reverse(), null, 2) }] };
     }
   );
 
@@ -76,8 +86,19 @@ export function registerReadTools(server) {
       const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
+
+      // Get all UIDs (lightweight), take the last N, then fetch body for only those
+      const allUids = await client.search({ all: true }, { uid: true });
+      const recentUids = allUids.slice(-limit);
+
+      if (recentUids.length === 0) {
+        await client.logout();
+        return { content: [{ type: 'text', text: '[]' }] };
+      }
+
       const messages = [];
-      for await (const msg of client.fetch('1:*', { envelope: true, bodyParts: ['TEXT'] })) {
+      const uidRange = recentUids.join(',');
+      for await (const msg of client.fetch(uidRange, { envelope: true, bodyParts: ['TEXT'] }, { uid: true })) {
         const bodyPart = msg.bodyParts?.get('text');
         const fullText = bodyPart ? Buffer.from(bodyPart).toString('utf8').replace(/\s+/g, ' ').trim() : '';
         messages.push({
@@ -90,8 +111,7 @@ export function registerReadTools(server) {
         });
       }
       await client.logout();
-      const recent = messages.slice(-limit).reverse();
-      return { content: [{ type: 'text', text: JSON.stringify(recent, null, 2) }] };
+      return { content: [{ type: 'text', text: JSON.stringify(messages.reverse(), null, 2) }] };
     }
   );
 

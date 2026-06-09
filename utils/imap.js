@@ -11,6 +11,9 @@ export async function createImapClient() {
       user: account.imap.user,
       pass: account.imap.password
     },
-    logger: false
+    logger: false,
+    connectionTimeout: 15000,
+    greetingTimeout: 10000,
+    socketTimeout: 30000
   });
 }
