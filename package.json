@@ -1,6 +1,7 @@
 {
   "name": "mailbridge-mcp",
-  "version": "2.2.1",
+  "version": "2.2.2",
+  "mcpName": "io.github.Creativestefan/mailbridge",
   "description": "Connect Claude to any email account — read, search, send, and organise emails via IMAP/SMTP",
   "type": "module",
   "main": "index.js",
@@ -10,6 +11,10 @@
   "scripts": {
     "start": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Creativestefan/mailbridge-mcp.git"
+  },
   "keywords": [
     "mcp",
     "email",
@@ -18,9 +23,6 @@
     "claude",
     "ai",
     "icloud",
-    "gmail",
-    "outlook",
-    "cpanel",
     "mailbridge"
   ],
   "author": "Stephen J.",
