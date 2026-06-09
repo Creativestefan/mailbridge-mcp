@@ -102,7 +102,7 @@ Use your full email address and password. The mail server is usually `mail.yourd
 
 - Passwords are stored exclusively in the OS credential store — never written to any file
 - All IMAP and SMTP connections use SSL/TLS
-- The setup portal runs locally on `127.0.0.1` only
+- The setup portal is a one-time browser form — it starts, collects your credentials, saves them to your OS keychain, then shuts down automatically
 - No data is sent to any Mailbridge server — everything runs locally on your device
 
 ---
