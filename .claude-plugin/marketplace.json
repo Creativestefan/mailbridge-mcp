@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "mailbridge",
+  "description": "Connect Claude to your email — read, search, send, reply, and organise emails from iCloud or any IMAP account.",
+  "owner": {
+    "name": "Stephen J.",
+    "email": "stefan@windwire.studio"
+  },
+  "plugins": [
+    {
+      "name": "mailbridge",
+      "description": "Connect Claude to your email inbox. Read, search, send, reply, organise emails and read attachments. Smart inbox digest with priorities, finance, events and action suggestions. Credentials stored securely in your OS keychain.",
+      "version": "2.3.0",
+      "author": {
+        "name": "Stephen J.",
+        "url": "https://github.com/Creativestefan"
+      },
+      "source": "./",
+      "license": "MIT",
+      "keywords": ["email", "imap", "smtp", "inbox", "icloud", "mailbridge", "attachments"]
+    }
+  ]
+}
