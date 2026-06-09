@@ -22,7 +22,7 @@ fi
 cp "${REPO_DIR}/.mcp.json" "${STAGING_DIR}/.mcp.json"
 cp -r "${REPO_DIR}/.claude-plugin" "${STAGING_DIR}/.claude-plugin"
 cp -r "${REPO_DIR}/hooks" "${STAGING_DIR}/hooks"
-cp -r "${REPO_DIR}/skills" "${STAGING_DIR}/skills"
+cp -RL "${REPO_DIR}/skills" "${STAGING_DIR}/skills"
 
 # MCP server under mcp/
 mkdir -p "${STAGING_DIR}/mcp"

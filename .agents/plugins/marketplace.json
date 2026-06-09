@@ -1,0 +1,20 @@
+{
+  "name": "mailbridge",
+  "interface": {
+    "displayName": "Mailbridge"
+  },
+  "plugins": [
+    {
+      "name": "mailbridge",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mailbridge"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

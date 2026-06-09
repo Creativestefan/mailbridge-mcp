@@ -1,0 +1,48 @@
+{
+  "name": "mailbridge",
+  "version": "2.3.3",
+  "description": "Connect Codex to your email: read, search, send, reply, and organise emails from iCloud or any IMAP account. Credentials are stored securely in your OS credential store.",
+  "author": {
+    "name": "Stephen J.",
+    "email": "stefan@windwire.studio",
+    "url": "https://github.com/Creativestefan"
+  },
+  "homepage": "https://github.com/Creativestefan/mailbridge-mcp",
+  "repository": "https://github.com/Creativestefan/mailbridge-mcp",
+  "license": "MIT",
+  "keywords": [
+    "email",
+    "imap",
+    "smtp",
+    "inbox",
+    "icloud",
+    "mailbridge",
+    "attachments"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Mailbridge",
+    "shortDescription": "Read, search, send, and organise email from Codex.",
+    "longDescription": "Mailbridge connects Codex to local email accounts through an MCP server. It supports inbox summaries, search, sending and replying, folder management, attachments, and account setup while storing credentials in the OS credential store.",
+    "developerName": "Stephen J.",
+    "category": "Productivity",
+    "capabilities": [
+      "Email",
+      "MCP",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Creativestefan/mailbridge-mcp",
+    "privacyPolicyURL": "https://github.com/Creativestefan/mailbridge-mcp/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/Creativestefan/mailbridge-mcp/blob/main/TERMS.md",
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "defaultPrompt": [
+      "Check my email connection.",
+      "Catch me up on my inbox.",
+      "Draft an email reply."
+    ]
+  }
+}
