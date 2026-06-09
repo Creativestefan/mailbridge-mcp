@@ -1,6 +1,6 @@
 {
   "name": "mailbridge-mcp",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "mcpName": "io.github.Creativestefan/mailbridge",
   "description": "Connect Claude to any email account — read, search, send, and organise emails via IMAP/SMTP",
   "type": "module",
