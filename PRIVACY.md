@@ -4,7 +4,7 @@
 
 ## Overview
 
-Mailbridge is a local MCP plugin that connects Claude to your email account. This policy explains what data is accessed, how it is handled, and what leaves your device.
+Mailbridge is a local MCP plugin that connects your AI assistant (Claude, OpenAI Codex, or any MCP-compatible client) to your email account. This policy explains what data is accessed, how it is handled, and what leaves your device.
 
 ---
 
@@ -23,7 +23,7 @@ Mailbridge reads from and writes to your email account using the credentials you
 Everything. Mailbridge runs entirely on your local machine. Specifically:
 
 - **Your email password** is stored exclusively in your operating system's secure credential store — macOS Keychain, Windows Credential Manager, or Linux Keyring. It is never written to any file, never logged, and never transmitted to any server other than your own mail provider.
-- **Email content** is fetched directly from your mail server (via IMAP/SMTP) and passed to Claude within your local session. It does not pass through any Mailbridge server.
+- **Email content** is fetched directly from your mail server (via IMAP/SMTP) and passed to your AI assistant within your local session. It does not pass through any Mailbridge server.
 - **Attachments** are downloaded temporarily to your device only when you explicitly request them and grant permission.
 
 ---
@@ -31,7 +31,7 @@ Everything. Mailbridge runs entirely on your local machine. Specifically:
 ## What leaves your device
 
 - **Your email credentials** are sent directly to your mail provider (iCloud, or your custom IMAP/SMTP server) to authenticate your session. They go nowhere else.
-- **Email content** is passed to Claude as part of your conversation. Claude's data handling is governed by [Anthropic's Privacy Policy](https://www.anthropic.com/legal/privacy).
+- **Email content** is passed to your AI assistant as part of your conversation. Data handling is governed by the privacy policy of the AI platform you are using — [Anthropic (Claude)](https://www.anthropic.com/legal/privacy) or [OpenAI (Codex/ChatGPT)](https://openai.com/policies/privacy-policy).
 - **Nothing is sent to Mailbridge servers** — there are none. The plugin has no backend, no analytics, and no telemetry.
 
 ---
@@ -50,7 +50,7 @@ All scanning happens locally on your device.
 
 ## Data retention
 
-Mailbridge does not store email content. Once your Claude session ends, no email data persists anywhere within Mailbridge. Your credentials remain in your OS keychain until you explicitly remove the account.
+Mailbridge does not store email content. Once your session ends, no email data persists anywhere within Mailbridge. Your credentials remain in your OS keychain until you explicitly remove the account.
 
 ---
 
@@ -59,7 +59,7 @@ Mailbridge does not store email content. Once your Claude session ends, no email
 Mailbridge connects to:
 
 - **Your mail provider** (iCloud, or your custom IMAP/SMTP server) — to read and send email
-- **Claude / Anthropic** — email content is shared with Claude as part of your conversation; see [Anthropic's Privacy Policy](https://www.anthropic.com/legal/privacy)
+- **Your AI assistant** — email content is shared with your AI assistant as part of your conversation. See the relevant policy: [Anthropic (Claude)](https://www.anthropic.com/legal/privacy) · [OpenAI (Codex/ChatGPT)](https://openai.com/policies/privacy-policy)
 
 No other third-party services are used.
 

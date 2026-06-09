@@ -1,6 +1,6 @@
 # Mailbridge MCP
 
-Connect Claude to your email — read, search, send, reply, organise, and read attachments from iCloud or any IMAP account.
+Connect your AI assistant to your email — read, search, send, reply, organise, and read attachments from iCloud or any IMAP account. Works with Claude, OpenAI Codex, Cursor, Windsurf, and any MCP-compatible client.
 
 Credentials are stored securely in your OS credential store (macOS Keychain, Windows Credential Manager, or Linux Keyring) — never in a file.
 
@@ -22,9 +22,11 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 
 ## Install
 
-### Via Claude Cowork (recommended)
+### Via Claude Cowork or OpenAI Codex (recommended)
 
-Install the `.plugin` file from the [releases page](../../releases) directly in Claude Cowork → Settings → Plugins.
+**Claude Cowork** — Install the `.plugin` file from the [releases page](../../releases) directly in Claude Cowork → Settings → Plugins.
+
+**OpenAI Codex** — Add Mailbridge from the MCP Registry or configure manually (see below).
 
 ### Via npm (standalone MCP server)
 
@@ -51,13 +53,13 @@ Add to your MCP client config (e.g. `claude_desktop_config.json`):
 
 On first install, a browser form opens automatically to connect your email account. Credentials go directly into your OS credential store on submit — nothing is written to a file.
 
-To reopen setup at any time, just ask Claude: **"open email setup"**.
+To reopen setup at any time, just ask your assistant: **"open email setup"**.
 
 ### iCloud
 
 You must use an [App-Specific Password](https://account.apple.com) — your main Apple ID password will not work.
 
-Go to **account.apple.com → Sign-In & Security → App-Specific Passwords → +**, name it "Claude Email", and use the generated password.
+Go to **account.apple.com → Sign-In & Security → App-Specific Passwords → +**, name it "Mailbridge", and use the generated password.
 
 ### Custom IMAP account
 
@@ -98,7 +100,7 @@ Mailbridge scans every attachment before downloading:
 | Safety | Meaning |
 |--------|---------|
 | ✅ Safe | Known safe file type, extension matches MIME type |
-| ⚠️ Warning | Unrecognised extension or MIME mismatch — Claude will not auto-download |
+| ⚠️ Warning | Unrecognised extension or MIME mismatch — will not auto-download |
 | 🚫 Blocked | Executable or script file — refused outright (.exe, .bat, .ps1, .sh, .jar, etc.) |
 
 **Supported file types:**
@@ -108,21 +110,21 @@ Mailbridge scans every attachment before downloading:
 | PDF | Text extracted and displayed |
 | DOCX | Text extracted and displayed |
 | TXT, CSV, MD | Displayed as plain text |
-| JPG, PNG, GIF, WebP | Displayed inline — Claude can see the image |
+| JPG, PNG, GIF, WebP | Displayed inline — the AI can see and describe the image |
 | MP3, MP4, WAV, M4A | Saved to temp path — pass to a transcription plugin (e.g. ElevenLabs, Whisper) |
 
 ---
 
 ## Inbox Summary
 
-Ask Claude **"catch me up"** or **"what did I miss?"** for a structured digest:
+Ask your assistant **"catch me up"** or **"what did I miss?"** for a structured digest:
 
 - 🔴 **Action Required** — emails that need a reply or decision
 - 💰 **Finance & Billing** — invoices, payments, subscription renewals
 - 📅 **Events & Calendar** — meeting invites, travel confirmations, RSVPs
 - 📦 **Updates & FYI** — newsletters, notifications, low-priority
 
-Followed by a **"Claude can help you"** block with specific suggested actions based on what's in your inbox.
+Followed by a **suggested actions** block with specific next steps based on what's in your inbox.
 
 ---
 
@@ -148,3 +150,10 @@ Followed by a **"Claude can help you"** block with specific suggested actions ba
 ## License
 
 MIT — see [LICENSE](LICENSE)
+
+---
+
+## Legal
+
+- [Privacy Policy](PRIVACY.md)
+- [Terms of Use](TERMS.md)
