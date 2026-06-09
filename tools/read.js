@@ -64,6 +64,38 @@ export function registerReadTools(server) {
   );
 
   server.tool(
+    'get_emails_with_preview',
+    'Fetch recent emails with a short body preview in a single pass — ideal for inbox summaries. More efficient than calling get_email_body for each email.',
+    {
+      folder: z.string().default('INBOX'),
+      limit: z.number().default(50),
+      preview_length: z.number().default(400)
+    },
+    { readOnlyHint: true },
+    async ({ folder, limit, preview_length }) => {
+      const client = await createImapClient();
+      await client.connect();
+      await client.mailboxOpen(folder);
+      const messages = [];
+      for await (const msg of client.fetch('1:*', { envelope: true, bodyParts: ['TEXT'] })) {
+        const bodyPart = msg.bodyParts?.get('text');
+        const fullText = bodyPart ? Buffer.from(bodyPart).toString('utf8').replace(/\s+/g, ' ').trim() : '';
+        messages.push({
+          uid: msg.uid,
+          from: msg.envelope.from?.[0]?.address,
+          from_name: msg.envelope.from?.[0]?.name,
+          subject: msg.envelope.subject,
+          date: msg.envelope.date,
+          preview: fullText.slice(0, preview_length)
+        });
+      }
+      await client.logout();
+      const recent = messages.slice(-limit).reverse();
+      return { content: [{ type: 'text', text: JSON.stringify(recent, null, 2) }] };
+    }
+  );
+
+  server.tool(
     'search_emails',
     'Search emails by sender, subject, or keyword',
     {

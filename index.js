@@ -7,6 +7,7 @@ import { registerReadTools } from './tools/read.js';
 import { registerSendTools } from './tools/send.js';
 import { registerManageTools } from './tools/manage.js';
 import { registerAccountTools } from './tools/accounts.js';
+import { registerAttachmentTools } from './tools/attachments.js';
 
 const server = new McpServer({ name: 'mailbridge', version: '2.2.0' });
 
@@ -15,6 +16,7 @@ registerReadTools(server);
 registerSendTools(server);
 registerManageTools(server);
 registerAccountTools(server);
+registerAttachmentTools(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

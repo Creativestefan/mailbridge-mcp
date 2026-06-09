@@ -12,6 +12,12 @@ setup-ui/package-lock.json
 setup-ui/README.md
 setup-ui/components.json
 
+# Plugin packaging (for Claude Cowork only, not npm)
+.claude-plugin/
+hooks/
+skills/
+build-plugin.sh
+
 # Old setup files
 providers/
 install.sh
