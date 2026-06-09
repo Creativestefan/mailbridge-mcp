@@ -1,11 +1,11 @@
 {
   "name": "mailbridge-mcp",
   "version": "2.2.0",
-  "description": "Connect Claude to any email account via IMAP/SMTP — read, search, send, and organise emails",
+  "description": "Connect Claude to any email account — read, search, send, and organise emails via IMAP/SMTP",
   "type": "module",
   "main": "index.js",
   "bin": {
-    "mailbridge-mcp": "./index.js"
+    "mailbridge-mcp": "index.js"
   },
   "scripts": {
     "start": "node index.js"

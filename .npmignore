@@ -1,0 +1,23 @@
+# Dev / build tooling
+node_modules/
+setup-ui/node_modules/
+setup-ui/src/
+setup-ui/public/
+setup-ui/eslint.config.js
+setup-ui/vite.config.ts
+setup-ui/tsconfig*.json
+setup-ui/index.html
+setup-ui/package.json
+setup-ui/package-lock.json
+setup-ui/README.md
+setup-ui/components.json
+
+# Old setup files
+providers/
+install.sh
+
+# Misc
+.env
+.DS_Store
+*.log
+.gitignore

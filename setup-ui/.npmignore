@@ -1,0 +1,10 @@
+node_modules/
+src/
+public/
+*.config.*
+tsconfig*.json
+index.html
+package.json
+package-lock.json
+README.md
+components.json
