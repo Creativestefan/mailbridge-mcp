@@ -24,13 +24,13 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 
 ### Claude Cowork
 
-1. Go to **Directory → Plugins → Personal → +**
+1. Go to **Customize → Connectors → Browse Plugins → "+" sign **
 2. Add marketplace source: `https://github.com/Creativestefan/mailbridge-mcp`
 3. Install **Mailbridge** from the list
 4. Start a new chat — the setup portal opens automatically if no account is connected
 5. To reopen setup at any time: **"open email setup"**
 
-**To update later:** Settings → Plugins → Mailbridge → Check for update
+**To update later:** Customize → Connectors → Browse Plugins → (...) button and Click Check for update
 
 ---
 
