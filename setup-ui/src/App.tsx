@@ -126,7 +126,7 @@ export default function App() {
         <CardHeader className="flex flex-col items-center">
           <img src={logo} alt="Mailbridge" className="h-10 w-auto mx-auto mb-2" />
           <CardTitle className="text-2xl mt-2 text-center tracking-tight">Your email is connected</CardTitle>
-          <CardDescription className="mt-2">Mailbridge can now help Claude read, search, organise, and send emails from this account. You can now safely close this window.</CardDescription>
+          <CardDescription className="mt-2">Mailbridge can now read, search, organise, and send emails from this account using your AI assistant. You can now safely close this window.</CardDescription>
         </CardHeader>
       </Card>
     </div>
@@ -140,7 +140,7 @@ export default function App() {
             <img src={logo} alt="Mailbridge" className="h-10 w-auto dark:invert" />
             <CardTitle className="text-3xl mt-2 text-center tracking-tight">Connect your email account</CardTitle>
             <CardDescription className="text-center max-w[460px] mt-1">
-              Mailbridge securely connects Claude to your inbox.
+              Mailbridge securely connects your AI assistant to your inbox.
               This setup is only required once. Your login details are encrypted
               and saved in your device’s secure keychain.
             </CardDescription>
@@ -240,13 +240,13 @@ export default function App() {
               </DialogHeader>
               <div className="text-sm text-muted-foreground space-y-4 leading-relaxed">
                 <p><strong className="text-xl font-medium text-foreground">Last updated:</strong> June 2026</p>
-                <p>Mailbridge ("the plugin") is a local tool that connects Claude to your personal email account via standard IMAP and SMTP protocols. By using Mailbridge you agree to the following terms.</p>
+                <p>Mailbridge ("the plugin") is a local tool that connects your AI assistant (Claude, OpenAI Codex, or any MCP-compatible client) to your personal email account via standard IMAP and SMTP protocols. By using Mailbridge you agree to the following terms.</p>
                 <h3 className="text-xl font-medium text-foreground">1. Local use only</h3>
                 <p>Mailbridge runs entirely on your device. It is not a cloud service and has no Mailbridge servers. All connections are made directly from your machine to your email provider.</p>
                 <h3 className="text-xl font-medium text-foreground">2. Your responsibilities</h3>
                 <p>You are responsible for keeping your email credentials secure. You must ensure you have the right to access any account you connect. Do not use Mailbridge to access accounts you do not own or have authorisation to use.</p>
                 <h3 className="text-xl font-medium text-foreground">3. Third-party services</h3>
-                <p>Mailbridge works alongside Claude by Anthropic. Your use of Claude is governed by <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">Anthropic's Terms of Service</a>. Mailbridge has no affiliation with Apple, Microsoft, any Linux distribution, or any email provider.</p>
+                <p>Mailbridge works alongside your AI assistant. Depending on the platform you use, your interactions are also governed by: <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">Anthropic's Terms of Service</a> (Claude) or <a href="https://openai.com/policies/terms-of-use" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">OpenAI's Terms of Use</a> (Codex / ChatGPT). Mailbridge has no affiliation with Apple, Microsoft, any Linux distribution, or any email provider.</p>
                 <h3 className="text-xl font-medium text-foreground">4. No warranty</h3>
                 <p>Mailbridge is provided "as is" without any warranty. The creator is not liable for any loss of data, missed emails, or damages arising from use of this plugin.</p>
                 <h3 className="text-xl font-medium text-foreground">5. Changes</h3>
@@ -272,7 +272,7 @@ export default function App() {
                   <li><strong className="font-medium text-foreground">Linux</strong> — GNOME Keyring or KWallet (via libsecret)</li>
                 </ul>
                 <h3 className="text-xl font-medium text-foreground">Your email content</h3>
-                <p>Emails are fetched directly from your email provider to your device over an encrypted (SSL/TLS) connection. Email content is read by Claude running locally through the Cowork plugin system. Anthropic's privacy policy governs how Claude handles that content.</p>
+                <p>Emails are fetched directly from your email provider to your device over an encrypted (SSL/TLS) connection. Email content is read by your AI assistant running locally. The privacy policy of your AI platform governs how that content is handled — <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">Anthropic (Claude)</a> or <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">OpenAI (Codex / ChatGPT)</a>.</p>
                 <h3 className="text-xl font-medium text-foreground">Deleting your data</h3>
                 <p>To remove all Mailbridge data from your device, delete the saved credentials and the config file.</p>
                 <p className="font-medium text-foreground">macOS:</p>
@@ -282,7 +282,7 @@ export default function App() {
                 <p className="font-medium text-foreground">Linux:</p>
                 <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`secret-tool clear service mailbridge\nrm ~/.universal-email-accounts.json`}</pre>
                 <h3 className="text-xl font-medium text-foreground">Contact</h3>
-                <p>Questions? Reach out to the plugin author through the Claude plugin directory.</p>
+                <p>Questions? Email <a href="mailto:stefan@windwire.studio" className="underline text-blue-600 dark:text-blue-400">stefan@windwire.studio</a></p>
               </div>
             </>
           )}
