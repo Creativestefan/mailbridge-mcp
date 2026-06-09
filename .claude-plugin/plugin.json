@@ -10,5 +10,6 @@
   "repository": "https://github.com/Creativestefan/mailbridge-mcp",
   "support": "mailto:stefan@windwire.studio",
   "license": "MIT",
+  "logo": "assets/logo.png",
   "keywords": ["email", "imap", "smtp", "inbox", "icloud", "mailbridge", "attachments"]
 }
