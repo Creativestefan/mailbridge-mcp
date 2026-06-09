@@ -31,12 +31,36 @@ After getting UIDs back, offer to fetch the full body of any result.
 
 ## Attachments
 
-If the user asks to open, read, or view an attachment:
-1. Call `get_attachments` with the email UID to list what's available
-2. Call `read_attachment` with the correct `part_id` to retrieve it
-3. **PDF / DOCX / TXT** — display the extracted text
-4. **Images (JPG, PNG)** — Claude displays them inline automatically
-5. **Audio / Video (MP3, MP4)** — check if a transcription plugin is connected. If yes, pass the `saved_to` file path to it. If no, say: "I've saved the file locally — connect a transcription plugin and I can read it for you."
+Always follow this flow — never skip the scan step:
+
+**Step 1 — Scan first, always**
+Call `get_attachments` with the email UID. This scans and lists attachments without downloading anything.
+
+Present the results to the user clearly:
+```
+📎 This email has 2 attachment(s):
+
+1. report.pdf — 340 KB · ✅ Safe
+2. invoice.docx — 80 KB · ✅ Safe
+```
+
+If any attachment shows ⚠️ Warning or 🚫 Blocked, tell the user:
+> "⚠️ **[filename]** looks suspicious — [safety_note]. I won't download this one."
+
+Never call `read_attachment` on a blocked file.
+
+**Step 2 — Ask for permission**
+After showing the scan results, ask:
+> "Would you like me to open any of these?"
+
+Wait for the user to say yes and specify which one before calling `read_attachment`.
+
+**Step 3 — Download and read (after user confirms)**
+Call `read_attachment` with the approved `part_id`. Claude Cowork will also show its own permission prompt at this step.
+
+- **PDF / DOCX / TXT** — display the extracted text
+- **Images (JPG, PNG)** — Claude displays them inline automatically
+- **Audio / Video (MP3, MP4)** — check if a transcription plugin is connected. If yes, pass the `saved_to` file path to it. If no, say: "I've saved the file locally — connect a transcription plugin and I can read it for you."
 
 ## Workflow
 
