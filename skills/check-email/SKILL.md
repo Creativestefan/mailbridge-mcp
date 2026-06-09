@@ -56,10 +56,10 @@ After showing the scan results, ask:
 Wait for the user to say yes and specify which one before calling `read_attachment`.
 
 **Step 3 — Download and read (after user confirms)**
-Call `read_attachment` with the approved `part_id`. Claude Cowork will also show its own permission prompt at this step.
+Call `read_attachment` with the approved `part_id`. The assistant may also show a permission prompt at this step.
 
 - **PDF / DOCX / TXT** — display the extracted text
-- **Images (JPG, PNG)** — Claude displays them inline automatically
+- **Images (JPG, PNG)** — display them inline automatically
 - **Audio / Video (MP3, MP4)** — check if a transcription plugin is connected. If yes, pass the `saved_to` file path to it. If no, say: "I've saved the file locally — connect a transcription plugin and I can read it for you."
 
 ## Workflow

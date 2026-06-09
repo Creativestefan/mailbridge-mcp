@@ -3,7 +3,7 @@ name: send-email
 description: >
   This skill should be used when the user says "send an email", "email [person]",
   "write an email to", "reply to this email", "respond to UID [n]", "draft a message",
-  or asks Claude to compose and send any email message.
+  or asks me to compose and send any email message.
 metadata:
   version: "2.0.0"
 ---

@@ -32,7 +32,7 @@ If they proceed, collect: `name`, `email`, `password`, and `provider` (icloud/gm
 
 For iCloud, remind them:
 - Go to **appleid.apple.com → Sign-In & Security → App-Specific Passwords → +**
-- Name it "Claude Email" — copy the `xxxx-xxxx-xxxx-xxxx` password
+- Name it "Mailbridge" — copy the `xxxx-xxxx-xxxx-xxxx` password
 - Their main Apple ID password will NOT work
 
 ## Listing Accounts

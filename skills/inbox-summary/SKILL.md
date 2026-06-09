@@ -43,7 +43,7 @@ Scan subject lines, senders, and previews to sort emails into:
 - **[Sender]** — [Subject] · [Date]
 
 ---
-### 💡 Claude can help you
+### 💡 I can help you
 - Reply to [sender] about [topic]
 - Pay or flag the invoice from [sender]
 - Add [event] to your calendar
@@ -58,5 +58,5 @@ Scan subject lines, senders, and previews to sort emails into:
 - Keep each line tight — one sentence max per email
 - Dates: show as "Today", "Yesterday", or "Mon 9 Jun" — never full ISO timestamps
 - If preview is too short to categorise, use subject + sender alone
-- After the digest, always include the "Claude can help you" block with 3–5 specific suggestions based on what's actually in the inbox
+- After the digest, always include the "I can help you" block with 3–5 specific suggestions based on what's actually in the inbox
 - If the user wants to act on anything (reply, delete, open), use the appropriate mailbridge tool
