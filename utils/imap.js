@@ -1,8 +1,8 @@
 import { ImapFlow } from 'imapflow';
 import { getActiveAccount } from './accounts.js';
 
-export function createImapClient() {
-  const account = getActiveAccount();
+export async function createImapClient() {
+  const account = await getActiveAccount();
   return new ImapFlow({
     host: account.imap.host,
     port: account.imap.port,

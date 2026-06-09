@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
 import { getActiveAccount } from './accounts.js';
 
-export function createTransporter() {
-  const account = getActiveAccount();
+export async function createTransporter() {
+  const account = await getActiveAccount();
   return nodemailer.createTransport({
     host: account.smtp.host,
     port: account.smtp.port,

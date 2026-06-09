@@ -1,2 +1,6 @@
-.env
 node_modules/
+setup-ui/node_modules/
+setup-ui/dist/
+.env
+.DS_Store
+*.log

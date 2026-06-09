@@ -10,7 +10,7 @@ export function registerStatusTools(server) {
     async () => {
       let account;
       try {
-        account = getActiveAccount();
+        account = await getActiveAccount();
       } catch (err) {
         return { content: [{ type: 'text', text: JSON.stringify({ connected: false, error: err.message }, null, 2) }] };
       }
@@ -18,7 +18,7 @@ export function registerStatusTools(server) {
       const config = loadConfig();
       const totalAccounts = Object.keys(config.accounts).length;
 
-      const client = createImapClient();
+      const client = await createImapClient();
       try {
         await client.connect();
         const inboxStatus = await client.status('INBOX', { messages: true, unseen: true });

@@ -1,42 +1,22 @@
 /**
- * macOS Keychain wrapper using the built-in `security` CLI.
- * No npm packages — works on every Mac, survives plugin reinstalls.
- * Service name: mailbridge
+ * Cross-platform credential storage via keytar.
+ * Routes to the OS native store on each platform:
+ *   macOS   → Keychain
+ *   Windows → Credential Manager
+ *   Linux   → GNOME Keyring / KWallet (libsecret)
  */
-import { execFileSync } from 'child_process';
+import keytar from 'keytar';
 
 const SERVICE = 'mailbridge';
 
-export function savePassword(accountName, password) {
-  // -U = update if exists
-  execFileSync('security', [
-    'add-generic-password',
-    '-a', accountName,
-    '-s', SERVICE,
-    '-w', password,
-    '-U'
-  ]);
+export async function savePassword(accountName, password) {
+  await keytar.setPassword(SERVICE, accountName, password);
 }
 
-export function getPassword(accountName) {
-  try {
-    return execFileSync('security', [
-      'find-generic-password',
-      '-a', accountName,
-      '-s', SERVICE,
-      '-w'
-    ], { encoding: 'utf8' }).trim();
-  } catch {
-    return null;
-  }
+export async function getPassword(accountName) {
+  return await keytar.getPassword(SERVICE, accountName);
 }
 
-export function deletePassword(accountName) {
-  try {
-    execFileSync('security', [
-      'delete-generic-password',
-      '-a', accountName,
-      '-s', SERVICE
-    ]);
-  } catch {}
+export async function deletePassword(accountName) {
+  await keytar.deletePassword(SERVICE, accountName);
 }

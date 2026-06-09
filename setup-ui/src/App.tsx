@@ -246,7 +246,7 @@ export default function App() {
                 <h3 className="text-xl font-medium text-foreground">2. Your responsibilities</h3>
                 <p>You are responsible for keeping your email credentials secure. You must ensure you have the right to access any account you connect. Do not use Mailbridge to access accounts you do not own or have authorisation to use.</p>
                 <h3 className="text-xl font-medium text-foreground">3. Third-party services</h3>
-                <p>Mailbridge works alongside Claude by Anthropic. Your use of Claude is governed by <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">Anthropic's Terms of Service</a>. Mailbridge has no affiliation with Apple, cPanel, or any email provider.</p>
+                <p>Mailbridge works alongside Claude by Anthropic. Your use of Claude is governed by <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="underline text-blue-600 dark:text-blue-400">Anthropic's Terms of Service</a>. Mailbridge has no affiliation with Apple, Microsoft, any Linux distribution, or any email provider.</p>
                 <h3 className="text-xl font-medium text-foreground">4. No warranty</h3>
                 <p>Mailbridge is provided "as is" without any warranty. The creator is not liable for any loss of data, missed emails, or damages arising from use of this plugin.</p>
                 <h3 className="text-xl font-medium text-foreground">5. Changes</h3>
@@ -265,12 +265,22 @@ export default function App() {
                 <h3 className="text-xl font-medium text-foreground">What we collect</h3>
                 <p>Nothing. Mailbridge collects no analytics, usage data, or personal information. There are no Mailbridge servers and no data is ever sent anywhere by this plugin.</p>
                 <h3 className="text-xl font-medium text-foreground">Your credentials</h3>
-                <p>Your email password is saved exclusively in your device's <strong className="text-md font-medium text-foreground">macOS Keychain</strong> — the same secure system used by Safari and iCloud. It is never written to a file, never logged, and never leaves your device through Mailbridge.</p>
+                <p>Your email password is saved exclusively in your device's secure credential store — it is never written to a file, never logged, and never leaves your device through Mailbridge.</p>
+                <ul className="list-disc list-inside space-y-1 ml-1">
+                  <li><strong className="font-medium text-foreground">macOS</strong> — Keychain (the same system used by Safari and iCloud)</li>
+                  <li><strong className="font-medium text-foreground">Windows</strong> — Credential Manager</li>
+                  <li><strong className="font-medium text-foreground">Linux</strong> — GNOME Keyring or KWallet (via libsecret)</li>
+                </ul>
                 <h3 className="text-xl font-medium text-foreground">Your email content</h3>
                 <p>Emails are fetched directly from your email provider to your device over an encrypted (SSL/TLS) connection. Email content is read by Claude running locally through the Cowork plugin system. Anthropic's privacy policy governs how Claude handles that content.</p>
                 <h3 className="text-xl font-medium text-foreground">Deleting your data</h3>
-                <p>To remove all Mailbridge data from your device, delete the Keychain entries and the config file:</p>
-                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`# Remove saved passwords from Keychain\nsecurity delete-generic-password -s "mailbridge"\n\n# Remove account config\nrm ~/.universal-email-accounts.json`}</pre>
+                <p>To remove all Mailbridge data from your device, delete the saved credentials and the config file.</p>
+                <p className="font-medium text-foreground">macOS:</p>
+                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`security delete-generic-password -s "mailbridge"\nrm ~/.universal-email-accounts.json`}</pre>
+                <p className="font-medium text-foreground">Windows (PowerShell):</p>
+                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`cmdkey /delete:mailbridge\nRemove-Item "$env:USERPROFILE\\.universal-email-accounts.json"`}</pre>
+                <p className="font-medium text-foreground">Linux:</p>
+                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`secret-tool clear service mailbridge\nrm ~/.universal-email-accounts.json`}</pre>
                 <h3 className="text-xl font-medium text-foreground">Contact</h3>
                 <p>Questions? Reach out to the plugin author through the Claude plugin directory.</p>
               </div>

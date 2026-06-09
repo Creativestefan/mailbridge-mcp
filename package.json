@@ -1,11 +1,11 @@
 {
-  "name": "universal-email-mcp",
-  "version": "2.0.0",
-  "description": "Universal Email MCP Server — connect Claude to any IMAP/SMTP email provider",
+  "name": "mailbridge-mcp",
+  "version": "2.2.0",
+  "description": "Connect Claude to any email account via IMAP/SMTP — read, search, send, and organise emails",
   "type": "module",
   "main": "index.js",
   "bin": {
-    "universal-email-mcp": "./index.js"
+    "mailbridge-mcp": "./index.js"
   },
   "scripts": {
     "start": "node index.js"
@@ -20,14 +20,15 @@
     "icloud",
     "gmail",
     "outlook",
-    "cpanel"
+    "cpanel",
+    "mailbridge"
   ],
-  "author": "",
+  "author": "Stephen J.",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
-    "dotenv": "^16.0.0",
     "imapflow": "^1.0.0",
+    "keytar": "^7.9.0",
     "nodemailer": "^8.0.10",
     "zod": "^3.0.0"
   }

@@ -11,7 +11,7 @@ export function registerReadTools(server) {
     },
     { readOnlyHint: true },
     async ({ folder, limit }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       const messages = [];
       await client.mailboxOpen(folder);
@@ -38,7 +38,7 @@ export function registerReadTools(server) {
     },
     { readOnlyHint: true },
     async ({ uid, folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
       const message = await client.fetchOne(String(uid), { envelope: true, bodyParts: ['TEXT'] }, { uid: true });
@@ -72,7 +72,7 @@ export function registerReadTools(server) {
     },
     { readOnlyHint: true },
     async ({ query, folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
       const uids = await client.search({

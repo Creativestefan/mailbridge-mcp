@@ -2,17 +2,18 @@
 /**
  * Mailbridge — Setup Portal
  * Opens a local browser page to securely add/edit accounts.
- * Passwords go directly into macOS Keychain — never into any file.
+ * Passwords go directly into the OS credential store — never into any file.
  *
  * Usage: node /path/to/plugin/mcp/setup.js
  */
 import http from 'http';
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { homedir } from 'os';
+import { homedir, platform } from 'os';
 import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
 import { ImapFlow } from 'imapflow';
+import keytar from 'keytar';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -24,16 +25,16 @@ const DIST_PATH = existsSync(join(__dirname, 'setup-ui', 'dist'))
   : join('/Users/air/Downloads/Scripts/email-mcp', 'setup-ui', 'dist');
 const PORT = 52693;
 
-// ─── Keychain helpers ───────────────────────────────────────────────────────
+// ─── Credential store helpers (cross-platform via keytar) ───────────────────
 
-function savePassword(account, password) {
-  execSync(`security add-generic-password -a "${account}" -s "mailbridge" -w "${password}" -U`);
+const SERVICE = 'mailbridge';
+
+async function savePassword(account, password) {
+  await keytar.setPassword(SERVICE, account, password);
 }
 
-function getPassword(account) {
-  try {
-    return execSync(`security find-generic-password -a "${account}" -s "mailbridge" -w 2>/dev/null`, { encoding: 'utf8' }).trim();
-  } catch { return null; }
+async function getPassword(account) {
+  return await keytar.getPassword(SERVICE, account);
 }
 
 // ─── IMAP verification ──────────────────────────────────────────────────────
@@ -109,8 +110,8 @@ const server = http.createServer((req, res) => {
           return;
         }
 
-        // Save password to Keychain
-        savePassword(name, password);
+        // Save password to OS credential store
+        await savePassword(name, password);
 
         // Save metadata (NO password) to JSON config
         const cfg = loadConfig();
@@ -143,6 +144,7 @@ server.listen(PORT, '127.0.0.1', () => {
   const url = `http://127.0.0.1:${PORT}`;
   console.log(`\n🔐 Mailbridge — Setup Portal`);
   console.log(`   Opening: ${url}`);
-  console.log(`   Passwords go to macOS Keychain — not stored in any file.\n`);
-  execSync(`open "${url}"`);
+  console.log(`   Passwords go to your OS credential store — never written to any file.\n`);
+  const openCmd = platform() === 'win32' ? 'start' : platform() === 'darwin' ? 'open' : 'xdg-open';
+  execSync(`${openCmd} "${url}"`);
 });

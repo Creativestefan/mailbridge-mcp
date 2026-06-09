@@ -74,8 +74,8 @@ export function registerAccountTools(server) {
         return { content: [{ type: 'text', text: 'Missing imap_host — either provide it or set provider= (icloud/gmail/outlook/yahoo)' }] };
       }
 
-      // Save password to macOS Keychain — NOT in the JSON file
-      savePassword(name, password);
+      // Save password to OS credential store — NOT in the JSON file
+      await savePassword(name, password);
 
       // Store metadata only (no password)
       const account = {
@@ -88,7 +88,7 @@ export function registerAccountTools(server) {
       config.accounts[name] = account;
       saveConfig(config);
 
-      return { content: [{ type: 'text', text: `Account "${name}" added — password saved to macOS Keychain. Use switch_account to activate it.` }] };
+      return { content: [{ type: 'text', text: `Account "${name}" added — password saved to system credential store. Use switch_account to activate it.` }] };
     }
   );
 
@@ -107,7 +107,7 @@ export function registerAccountTools(server) {
       }
       delete config.accounts[name];
       saveConfig(config);
-      deletePassword(name); // remove from Keychain too
+      await deletePassword(name); // remove from OS credential store too
       return { content: [{ type: 'text', text: `Account "${name}" removed from config and Keychain` }] };
     }
   );

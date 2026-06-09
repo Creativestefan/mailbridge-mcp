@@ -11,7 +11,7 @@ export function registerManageTools(server) {
     },
     { destructiveHint: false, idempotentHint: true },
     async ({ uid, folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
       await client.messageFlagsAdd({ uid: true }, [String(uid)], ['\\Seen']);
@@ -29,7 +29,7 @@ export function registerManageTools(server) {
     },
     { destructiveHint: false, idempotentHint: true },
     async ({ uid, folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
       await client.messageFlagsRemove({ uid: true }, [String(uid)], ['\\Seen']);
@@ -48,7 +48,7 @@ export function registerManageTools(server) {
     },
     { destructiveHint: false },
     async ({ uid, from_folder, to_folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(from_folder);
       await client.messageMove({ uid: true }, [String(uid)], to_folder);
@@ -66,7 +66,7 @@ export function registerManageTools(server) {
     },
     { destructiveHint: true },
     async ({ uid, folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
 
@@ -100,7 +100,7 @@ export function registerManageTools(server) {
     {},
     { readOnlyHint: true },
     async () => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       const folders = [];
       for await (const mailbox of client.list()) {

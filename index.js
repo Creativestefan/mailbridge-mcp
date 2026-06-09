@@ -8,7 +8,7 @@ import { registerSendTools } from './tools/send.js';
 import { registerManageTools } from './tools/manage.js';
 import { registerAccountTools } from './tools/accounts.js';
 
-const server = new McpServer({ name: 'mailbridge', version: '2.1.0' });
+const server = new McpServer({ name: 'mailbridge', version: '2.2.0' });
 
 registerStatusTools(server);
 registerReadTools(server);

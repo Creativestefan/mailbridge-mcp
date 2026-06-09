@@ -1,6 +1,6 @@
 /**
  * Account config — stores metadata only (host, port, user).
- * Passwords are NEVER written here — they live in macOS Keychain.
+ * Passwords are NEVER written here — they live in the OS credential store.
  */
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { homedir } from 'os';
@@ -20,7 +20,7 @@ export function saveConfig(config) {
   writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2), 'utf8');
 }
 
-export function getActiveAccount() {
+export async function getActiveAccount() {
   const config = loadConfig();
 
   if (!config.active || !config.accounts[config.active]) {
@@ -31,10 +31,10 @@ export function getActiveAccount() {
 
   const meta = config.accounts[config.active];
 
-  const password = getPassword(config.active);
+  const password = await getPassword(config.active);
   if (!password) {
     throw new Error(
-      `No password found in Keychain for "${config.active}". Run: node ~/.universal-email-mcp-setup.js`
+      `No password found for "${config.active}". Run: node ~/.universal-email-mcp-setup.js`
     );
   }
 

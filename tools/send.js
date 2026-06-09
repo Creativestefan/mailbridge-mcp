@@ -16,9 +16,10 @@ export function registerSendTools(server) {
     },
     { destructiveHint: true },
     async ({ to, subject, body, cc, bcc }) => {
-      const transporter = createTransporter();
+      const account = await getActiveAccount();
+      const transporter = await createTransporter();
       await transporter.sendMail({
-        from: getActiveAccount().smtp.user,
+        from: account.smtp.user,
         to,
         cc,
         bcc,
@@ -39,7 +40,7 @@ export function registerSendTools(server) {
     },
     { destructiveHint: true },
     async ({ uid, body, folder }) => {
-      const client = createImapClient();
+      const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
       const original = await client.fetchOne(String(uid), { envelope: true }, { uid: true });
@@ -56,9 +57,10 @@ export function registerSendTools(server) {
         : `Re: ${original.envelope.subject}`;
       const messageId = original.envelope.messageId;
 
-      const transporter = createTransporter();
+      const account = await getActiveAccount();
+      const transporter = await createTransporter();
       await transporter.sendMail({
-        from: getActiveAccount().smtp.user,
+        from: account.smtp.user,
         to: replyTo,
         subject,
         text: body,
