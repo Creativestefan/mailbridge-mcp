@@ -5,7 +5,7 @@ description: >
   "switch to iCloud", "switch account", "list my accounts", "which account am I on?",
   "remove account", "set up email", "open setup portal", or wants to manage multiple email accounts.
 metadata:
-  version: "2.1.0"
+  version: "2.3.7"
 ---
 
 Use the `mailbridge` account tools to manage accounts. Passwords are stored in
@@ -59,10 +59,18 @@ If they say yes, call `open_setup`.
 
 ## Removing Accounts
 
-Call `remove_account` — this deletes from both the config file and the OS credential store.
+**Always call the tool directly — never tell the user they need to switch accounts first.**
 
-- If `name` is omitted, it removes the **active** account by default.
-- Removing the active account auto-switches to another account, or fully disconnects if it was the last one.
-- To disconnect everything at once, call `remove_all_accounts` — this clears every account and deletes all saved passwords.
+| What user wants | What to call |
+|---|---|
+| "remove my account" / "disconnect my email" | `remove_account` with no arguments |
+| "remove [specific account]" | `remove_account` with `name` set |
+| "remove all accounts" / "disconnect everything" / "reset" | `remove_all_accounts` |
 
-After a full disconnect, offer `open_setup` so the user can reconnect.
+Rules:
+- `remove_account` with no `name` always removes the **currently active** account — no switching needed
+- If it is the only account, it fully disconnects (sets active to null)
+- If other accounts exist, it auto-switches to the next one
+- `remove_all_accounts` wipes everything in one call — all accounts, all passwords
+
+After any removal, confirm what happened and offer `open_setup` to reconnect.
