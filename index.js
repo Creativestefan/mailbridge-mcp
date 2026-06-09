@@ -25,7 +25,7 @@ process.on('exit', cleanup);
 process.on('SIGTERM', () => { cleanup(); process.exit(0); });
 process.on('SIGINT', () => { cleanup(); process.exit(0); });
 
-const server = new McpServer({ name: 'mailbridge', version: '2.3.7' });
+const server = new McpServer({ name: 'mailbridge', version: '2.3.8' });
 
 registerStatusTools(server);
 registerReadTools(server);
