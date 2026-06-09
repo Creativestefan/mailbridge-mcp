@@ -7,7 +7,7 @@ import { homedir } from 'os';
 import { join } from 'path';
 import { getPassword } from './keychain.js';
 
-const CONFIG_PATH = join(homedir(), '.universal-email-accounts.json');
+const CONFIG_PATH = join(homedir(), '.mailbridge-accounts.json');
 
 export function loadConfig() {
   if (existsSync(CONFIG_PATH)) {

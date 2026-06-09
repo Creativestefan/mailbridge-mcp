@@ -276,11 +276,11 @@ export default function App() {
                 <h3 className="text-xl font-medium text-foreground">Deleting your data</h3>
                 <p>To remove all Mailbridge data from your device, delete the saved credentials and the config file.</p>
                 <p className="font-medium text-foreground">macOS:</p>
-                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`security delete-generic-password -s "mailbridge"\nrm ~/.universal-email-accounts.json`}</pre>
+                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`security delete-generic-password -s "mailbridge"\nrm ~/.mailbridge-accounts.json`}</pre>
                 <p className="font-medium text-foreground">Windows (PowerShell):</p>
-                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`cmdkey /delete:mailbridge\nRemove-Item "$env:USERPROFILE\\.universal-email-accounts.json"`}</pre>
+                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`cmdkey /delete:mailbridge\nRemove-Item "$env:USERPROFILE\\.mailbridge-accounts.json"`}</pre>
                 <p className="font-medium text-foreground">Linux:</p>
-                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`secret-tool clear service mailbridge\nrm ~/.universal-email-accounts.json`}</pre>
+                <pre className="bg-muted rounded p-3 text-xs overflow-x-auto">{`secret-tool clear service mailbridge\nrm ~/.mailbridge-accounts.json`}</pre>
                 <h3 className="text-xl font-medium text-foreground">Contact</h3>
                 <p>Questions? Email <a href="mailto:stefan@windwire.studio" className="underline text-blue-600 dark:text-blue-400">stefan@windwire.studio</a></p>
               </div>

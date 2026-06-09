@@ -17,7 +17,7 @@ import keytar from 'keytar';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const CONFIG_PATH = join(homedir(), '.universal-email-accounts.json');
+const CONFIG_PATH = join(homedir(), '.mailbridge-accounts.json');
 // Resolve dist relative to this file's real location, falling back to the
 // canonical source directory so ~/.universal-email-mcp-setup.js works too.
 const DIST_PATH = existsSync(join(__dirname, 'setup-ui', 'dist'))

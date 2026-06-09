@@ -5,7 +5,7 @@
 # 3. Open setup portal automatically if no account is configured yet
 
 MCP_DIR="${CLAUDE_PLUGIN_ROOT}/mcp"
-CONFIG_FILE="$HOME/.universal-email-accounts.json"
+CONFIG_FILE="$HOME/.mailbridge-accounts.json"
 VERSION_STAMP="$HOME/.mailbridge-version"
 
 # Install dependencies on first run
