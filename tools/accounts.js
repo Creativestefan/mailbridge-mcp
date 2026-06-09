@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { loadConfig, saveConfig } from '../utils/accounts.js';
 import { savePassword, deletePassword } from '../utils/keychain.js';
+import { spawn } from 'child_process';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PROVIDER_PRESETS = {
   icloud: {
@@ -107,8 +112,24 @@ export function registerAccountTools(server) {
       }
       delete config.accounts[name];
       saveConfig(config);
-      await deletePassword(name); // remove from OS credential store too
-      return { content: [{ type: 'text', text: `Account "${name}" removed from config and Keychain` }] };
+      await deletePassword(name);
+      return { content: [{ type: 'text', text: `Account "${name}" removed from config and credential store` }] };
+    }
+  );
+
+  server.tool(
+    'open_setup',
+    'Open the Mailbridge setup portal in the browser to connect or add an email account',
+    {},
+    { destructiveHint: false },
+    async () => {
+      const setupPath = join(__dirname, '..', 'setup.js');
+      spawn('node', [setupPath], {
+        detached: true,
+        stdio: 'ignore',
+        cwd: join(__dirname, '..')
+      }).unref();
+      return { content: [{ type: 'text', text: 'Opening Mailbridge setup portal in your browser. Fill in your email details and click Connect.' }] };
     }
   );
 }
