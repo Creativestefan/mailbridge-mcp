@@ -89,7 +89,8 @@ Use your full email address and password. The mail server is usually `mail.yourd
 | `open_setup` | Open the setup portal to connect or add an account | Auto |
 | `switch_account` | Switch active account | Auto |
 | `add_account` | Add a new account via chat | Auto |
-| `remove_account` | Remove an account | Requires approval |
+| `remove_account` | Remove an account (defaults to active) | Requires approval |
+| `remove_all_accounts` | Disconnect and remove all accounts | Requires approval |
 
 ---
 

@@ -60,4 +60,9 @@ If they say yes, call `open_setup`.
 ## Removing Accounts
 
 Call `remove_account` — this deletes from both the config file and the OS credential store.
-Cannot remove the active account.
+
+- If `name` is omitted, it removes the **active** account by default.
+- Removing the active account auto-switches to another account, or fully disconnects if it was the last one.
+- To disconnect everything at once, call `remove_all_accounts` — this clears every account and deletes all saved passwords.
+
+After a full disconnect, offer `open_setup` so the user can reconnect.

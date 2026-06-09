@@ -99,13 +99,20 @@ export function registerAccountTools(server) {
 
   server.tool(
     'remove_account',
-    'Remove a configured email account and delete its password from Keychain',
-    { name: z.string() },
+    'Remove a configured email account and delete its password from Keychain. If no name is given, removes the currently active account.',
+    { name: z.string().optional().describe('Account name to remove. Defaults to the active account if omitted.') },
     { destructiveHint: true },
     async ({ name }) => {
       const config = loadConfig();
-      if (!config.accounts[name]) {
-        return { content: [{ type: 'text', text: `Account "${name}" not found` }] };
+
+      // Default to the active account when no name is provided
+      if (!name) {
+        name = config.active;
+      }
+
+      if (!name || !config.accounts[name]) {
+        const available = Object.keys(config.accounts).join(', ') || 'none';
+        return { content: [{ type: 'text', text: `Account "${name ?? '(none)'}" not found. Available: ${available}` }] };
       }
 
       const isActive = config.active === name;
@@ -132,6 +139,33 @@ export function registerAccountTools(server) {
         : '';
 
       return { content: [{ type: 'text', text: `Account "${name}" removed from config and credential store.${followUp}` }] };
+    }
+  );
+
+  server.tool(
+    'remove_all_accounts',
+    'Disconnect and remove ALL email accounts at once — clears every account from config and deletes all passwords from the credential store. Use when the user wants to fully disconnect or reset.',
+    {},
+    { destructiveHint: true },
+    async () => {
+      const config = loadConfig();
+      const names = Object.keys(config.accounts);
+
+      if (names.length === 0) {
+        return { content: [{ type: 'text', text: 'No accounts to remove — you are already fully disconnected.' }] };
+      }
+
+      // Delete every password from the credential store
+      for (const name of names) {
+        try { await deletePassword(name); } catch { /* ignore individual failures */ }
+      }
+
+      // Clear the config entirely
+      config.accounts = {};
+      config.active = null;
+      saveConfig(config);
+
+      return { content: [{ type: 'text', text: `Removed ${names.length} account(s) and cleared all saved passwords. You are now fully disconnected. Use open_setup to connect again.` }] };
     }
   );
 
