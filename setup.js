@@ -18,12 +18,18 @@ import keytar from 'keytar';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const CONFIG_PATH = join(homedir(), '.mailbridge-accounts.json');
-// Resolve dist relative to this file's real location, falling back to the
-// canonical source directory so ~/.universal-email-mcp-setup.js works too.
+// Resolve dist — works for plugin installs (mcp/setup-ui/), npm installs,
+// and local source layouts (setup-ui/ next to setup.js).
 const DIST_PATH = existsSync(join(__dirname, 'setup-ui', 'dist'))
   ? join(__dirname, 'setup-ui', 'dist')
-  : join('/Users/air/Downloads/Scripts/email-mcp', 'setup-ui', 'dist');
+  : join(__dirname, '..', 'setup-ui', 'dist');
 const PORT = 52693;
+
+function openBrowser() {
+  const url = `http://127.0.0.1:${PORT}`;
+  const openCmd = platform() === 'win32' ? 'start' : platform() === 'darwin' ? 'open' : 'xdg-open';
+  try { execSync(`${openCmd} "${url}"`); } catch { /* ignore — browser open is best-effort */ }
+}
 
 // ─── Credential store helpers (cross-platform via keytar) ───────────────────
 
@@ -140,11 +146,16 @@ const server = http.createServer((req, res) => {
   }
 });
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    // Server already running — just open the browser to the existing instance
+    openBrowser();
+  }
+});
+
 server.listen(PORT, '127.0.0.1', () => {
-  const url = `http://127.0.0.1:${PORT}`;
   console.log(`\n🔐 Mailbridge — Setup Portal`);
-  console.log(`   Opening: ${url}`);
+  console.log(`   Opening: http://127.0.0.1:${PORT}`);
   console.log(`   Passwords go to your OS credential store — never written to any file.\n`);
-  const openCmd = platform() === 'win32' ? 'start' : platform() === 'darwin' ? 'open' : 'xdg-open';
-  execSync(`${openCmd} "${url}"`);
+  openBrowser();
 });
