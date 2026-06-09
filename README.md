@@ -1,6 +1,6 @@
 # Mailbridge MCP
 
-Connect your AI assistant to your email — read, search, send, reply, organise, and read attachments from iCloud or any IMAP account. Works with Claude, OpenAI Codex, Cursor, Windsurf, and any MCP-compatible client.
+Connect your AI assistant to your email — read, search, send, reply, organise, draft, schedule, and manage attachments from iCloud or any IMAP account. Works with Claude, OpenAI Codex, Cursor, Windsurf, and any MCP-compatible client.
 
 Credentials are stored securely in your OS credential store (macOS Keychain, Windows Credential Manager, or Linux Keyring) — never in a file.
 
@@ -8,13 +8,35 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 
 ## Features
 
+### Reading & Search
 - **Read emails** — fetch inbox, any folder, with subject/sender/date
-- **Inbox digest** — smart summary with priorities, finance, events, and action suggestions
+- **Inbox digest** — smart summary with priority scoring, categories, and action suggestions
 - **Search** — find emails by keyword, sender, or subject
+- **Thread view** — see the full conversation thread for any email
+- **Contact history** — view all emails to/from a specific contact
+- **Unified inbox** — merge multiple folders into one date-sorted view
+- **Priority scoring** — every email is automatically scored 1–5 for urgency
+- **Auto-categorisation** — emails are tagged Finance, Travel, Calendar, Newsletter, and more
+
+### Sending & Drafts
 - **Send & reply** — compose new emails or reply with threading
-- **Organise** — move, delete, mark as read/unread
+- **Smart drafts** — save emails locally for review before sending
+- **Email scheduling** — schedule emails to send at a future time
+
+### Organisation
+- **Bulk actions** — mark, move, or delete multiple emails in one command
+- **Follow-up reminders** — tag an email "remind me in 3 days" and it surfaces in your next digest
+- **Unsubscribe** — auto-unsubscribe from mailing lists via List-Unsubscribe headers
+- **Email rules** — define local rules to flag, categorise, or prioritise emails automatically
+- **Move, delete, mark** — standard inbox management tools
+
+### Attachments & Content
 - **Read attachments** — PDF, DOCX, TXT, JPG, PNG, MP3, MP4 and more
-- **Attachment safety** — every attachment is scanned before download; dangerous file types are blocked outright
+- **Attachment safety** — every attachment is scanned before download; dangerous file types are blocked
+- **Export email** — export any email as clean Markdown
+- **Calendar extraction** — pull event details (dates, times, locations) from emails and .ics files
+
+### Accounts
 - **Multiple accounts** — connect and switch between accounts
 - **Secure credentials** — passwords stored in OS keychain, never in plain text
 
@@ -24,7 +46,7 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 
 ### Claude Cowork
 
-1. Go to **Customize → Connectors → Browse Plugins → "+" sign **
+1. Go to **Customize → Connectors → Browse Plugins → "+" sign**
 2. Add marketplace source: `https://github.com/Creativestefan/mailbridge-mcp`
 3. Install **Mailbridge** from the list
 4. Start a new chat — the setup portal opens automatically if no account is connected
@@ -112,28 +134,120 @@ Use your full email address and password. The mail server is usually `mail.yourd
 
 ## Tools
 
-| Tool | Description | Permission |
-|------|-------------|------------|
-| `check_connection` | Test connection and show inbox stats | Auto |
-| `read_emails` | Fetch emails from any folder | Auto |
-| `get_email_body` | Get full body of an email by UID | Auto |
-| `get_emails_with_preview` | Fetch emails with body snippets — used for inbox summaries | Auto |
-| `search_emails` | Search by keyword, sender, subject | Auto |
-| `list_folders` | List all mailbox folders | Auto |
-| `get_attachments` | List attachments with safety scan — no download | Auto |
-| `read_attachment` | Download and read an attachment after user approves | Requires approval |
-| `list_accounts` | Show all connected accounts | Auto |
-| `send_email` | Compose and send a new email | Requires approval |
-| `reply_to_email` | Reply to an existing email | Requires approval |
-| `move_email` | Move email to another folder | Auto |
-| `mark_as_read` | Mark email as read | Auto |
-| `mark_as_unread` | Mark email as unread | Auto |
-| `delete_email` | Move email to Trash | Requires approval |
-| `open_setup` | Open the setup portal to connect or add an account | Auto |
-| `switch_account` | Switch active account | Auto |
-| `add_account` | Add a new account via chat | Auto |
-| `remove_account` | Remove an account (defaults to active) | Requires approval |
-| `remove_all_accounts` | Disconnect and remove all accounts | Requires approval |
+### Reading
+
+| Tool | Description |
+|------|-------------|
+| `check_connection` | Test connection and show inbox stats |
+| `read_emails` | Fetch emails from any folder (includes priority + category) |
+| `get_email_body` | Get full body of an email by UID |
+| `get_emails_with_preview` | Fetch emails with body snippets — used for inbox summaries |
+| `search_emails` | Search by keyword, sender, or subject |
+| `list_folders` | List all mailbox folders |
+| `get_thread` | Fetch the full conversation thread for an email |
+| `get_contact_history` | All emails to/from a specific contact |
+| `unified_inbox` | Merge multiple folders into one sorted view |
+| `export_email` | Export an email as clean Markdown |
+| `extract_calendar_events` | Extract event details and parse .ics attachments |
+
+### Attachments
+
+| Tool | Description |
+|------|-------------|
+| `get_attachments` | List attachments with safety scan — no download |
+| `read_attachment` | Download and read an attachment after user approves |
+
+### Sending & Drafts
+
+| Tool | Description |
+|------|-------------|
+| `send_email` | Compose and send a new email |
+| `reply_to_email` | Reply to an existing email |
+| `save_draft` | Save an email as a local draft |
+| `list_drafts` | List saved drafts |
+| `send_draft` | Send a saved draft by ID |
+| `delete_draft` | Discard a saved draft |
+| `schedule_email` | Schedule an email for future delivery |
+| `list_scheduled` | List pending scheduled emails |
+| `cancel_scheduled` | Cancel a scheduled email |
+
+### Organisation
+
+| Tool | Description |
+|------|-------------|
+| `mark_as_read` | Mark email as read |
+| `mark_as_unread` | Mark email as unread |
+| `move_email` | Move email to another folder |
+| `delete_email` | Move email to Trash |
+| `bulk_mark_read` | Mark multiple emails as read |
+| `bulk_mark_unread` | Mark multiple emails as unread |
+| `bulk_move` | Move multiple emails to a folder |
+| `bulk_delete` | Move multiple emails to Trash |
+| `set_reminder` | Set a follow-up reminder on an email |
+| `list_reminders` | View active reminders (overdue ones flagged) |
+| `complete_reminder` | Mark a reminder as done |
+| `unsubscribe_email` | Auto-unsubscribe via List-Unsubscribe header |
+
+### Rules
+
+| Tool | Description |
+|------|-------------|
+| `add_rule` | Add a local rule to flag, categorise, or prioritise emails |
+| `list_rules` | List all configured rules |
+| `remove_rule` | Remove a rule by name |
+| `apply_rules` | Dry-run rules against a set of emails |
+
+### Accounts
+
+| Tool | Description |
+|------|-------------|
+| `list_accounts` | Show all connected accounts |
+| `switch_account` | Switch active account |
+| `add_account` | Add a new account via chat |
+| `remove_account` | Remove an account (defaults to active) |
+| `remove_all_accounts` | Disconnect and remove all accounts |
+| `open_setup` | Open the setup portal to connect or add an account |
+
+---
+
+## Inbox Summary
+
+Ask your assistant **"catch me up"** or **"what did I miss?"** for a structured digest.
+
+Every email now carries automatic **priority scoring** (1–5) and **category tags** so the digest is sorted instantly:
+
+- 🔴 **Action Required** — priority 4–5 or keywords like "urgent", "deadline", "reply needed"
+- 💰 **Finance & Billing** — invoices, payments, subscription renewals
+- 📅 **Events & Calendar** — meeting invites, travel confirmations, RSVPs
+- 📦 **Updates & FYI** — newsletters, notifications, low-priority
+
+**Follow-up reminders** due today or overdue are surfaced at the top of every digest.
+
+The digest closes with a **suggested actions** block — specific next steps like "unsubscribe from X", "set a reminder on Y", or "bulk archive the 8 newsletters".
+
+---
+
+## Drafts & Scheduling
+
+Save any email as a draft before sending:
+> "Draft a reply to this email — I'll review it first"
+
+Schedule an email for later:
+> "Send this to john@example.com tomorrow at 9am"
+
+Scheduled emails fire automatically on the next session start after the scheduled time.
+
+---
+
+## Email Rules
+
+Define local rules that apply automatically during inbox summaries:
+
+> "Flag all emails from boss@company.com as urgent"
+> "Categorise anything from billing@stripe.com as Finance"
+> "Set priority 5 on emails with 'invoice due' in the subject"
+
+Rules are stored locally — they work without any server-side filtering.
 
 ---
 
@@ -155,20 +269,7 @@ Mailbridge scans every attachment before downloading:
 | DOCX | Text extracted and displayed |
 | TXT, CSV, MD | Displayed as plain text |
 | JPG, PNG, GIF, WebP | Displayed inline — the AI can see and describe the image |
-| MP3, MP4, WAV, M4A | Saved to temp path — pass to a transcription plugin (e.g. ElevenLabs, Whisper) |
-
----
-
-## Inbox Summary
-
-Ask your assistant **"catch me up"** or **"what did I miss?"** for a structured digest:
-
-- 🔴 **Action Required** — emails that need a reply or decision
-- 💰 **Finance & Billing** — invoices, payments, subscription renewals
-- 📅 **Events & Calendar** — meeting invites, travel confirmations, RSVPs
-- 📦 **Updates & FYI** — newsletters, notifications, low-priority
-
-Followed by a **suggested actions** block with specific next steps based on what's in your inbox.
+| MP3, MP4, WAV, M4A | Saved to temp path — pass to a transcription plugin |
 
 ---
 
