@@ -1,6 +1,6 @@
 # Mailbridge MCP
 
-Connect Claude to any email account — read, search, send, reply, and organise emails from iCloud, Gmail, Outlook, or any IMAP provider.
+Connect Claude to your email — read, search, send, reply, and organise emails from iCloud or any IMAP account.
 
 Credentials are stored securely in your OS credential store (macOS Keychain, Windows Credential Manager, or Linux Keyring) — never in a file.
 
@@ -61,13 +61,9 @@ You must use an [App-Specific Password](https://account.apple.com) — your main
 
 Go to **account.apple.com → Sign-In & Security → App-Specific Passwords → +**, name it "Claude Email", and use the generated password.
 
-### Gmail
+### Custom IMAP account
 
-Enable IMAP in Gmail settings and use an [App Password](https://myaccount.google.com/apppasswords) if you have 2FA enabled.
-
-### cPanel / Custom domain
-
-Use your full email address and password. The mail server is usually `mail.yourdomain.com`.
+Use your full email address and password. The mail server is usually `mail.yourdomain.com` — check your email provider's settings if unsure.
 
 ---
 
@@ -98,10 +94,7 @@ Use your full email address and password. The mail server is usually `mail.yourd
 | Provider | IMAP | SMTP |
 |----------|------|------|
 | iCloud | `imap.mail.me.com:993` | `smtp.mail.me.com:587` |
-| Gmail | `imap.gmail.com:993` | `smtp.gmail.com:587` |
-| Outlook / Hotmail | `outlook.office365.com:993` | `smtp.office365.com:587` |
-| Yahoo | `imap.mail.yahoo.com:993` | `smtp.mail.yahoo.com:465` |
-| cPanel / Custom | Your mail server | Your mail server |
+| Custom IMAP | Your mail server | Your mail server |
 
 ---
 
