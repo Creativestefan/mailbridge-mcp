@@ -22,13 +22,56 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 
 ## Install
 
-### Via Claude Cowork or OpenAI Codex (recommended)
+### Claude Cowork
 
-**Claude Cowork** — Install the `.plugin` file from the [releases page](../../releases) directly in Claude Cowork → Settings → Plugins.
+1. Go to **Directory → Plugins → Personal → +**
+2. Add marketplace source: `https://github.com/Creativestefan/mailbridge-mcp`
+3. Install **Mailbridge** from the list
+4. Start a new chat — the setup portal opens automatically if no account is connected
+5. To reopen setup at any time: **"open email setup"**
 
-**OpenAI Codex** — Add Mailbridge from the MCP Registry or configure manually (see below).
+**To update later:** Settings → Plugins → Mailbridge → Check for update
 
-### Via npm (standalone MCP server)
+---
+
+### OpenAI Codex
+
+1. Add the Mailbridge marketplace:
+
+```bash
+codex plugin marketplace add Creativestefan/mailbridge-mcp --ref main
+```
+
+2. Install the plugin:
+
+```bash
+codex plugin add mailbridge@mailbridge
+```
+
+3. Start a new Codex thread and test:
+
+```
+Use Mailbridge to check my email connection.
+```
+
+4. If no account is connected yet:
+
+```
+Open Mailbridge setup.
+```
+
+The setup portal saves credentials directly to your OS credential store (macOS Keychain, Windows Credential Manager, or Linux Keyring).
+
+**To update later:**
+
+```bash
+codex plugin marketplace upgrade
+codex plugin add mailbridge@mailbridge
+```
+
+---
+
+### Via npm (any MCP client)
 
 ```bash
 npx mailbridge-mcp
