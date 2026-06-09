@@ -8,7 +8,7 @@
   },
   "homepage": "https://github.com/Creativestefan/mailbridge-mcp",
   "repository": "https://github.com/Creativestefan/mailbridge-mcp",
-  "support": "https://github.com/Creativestefan/mailbridge-mcp/issues",
+  "support": "mailto:stefan@windwire.studio",
   "license": "MIT",
   "keywords": ["email", "imap", "smtp", "inbox", "icloud", "mailbridge", "attachments"]
 }
