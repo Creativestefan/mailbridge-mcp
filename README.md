@@ -48,9 +48,9 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 
 1. Go to **Customize → Connectors → Browse Plugins → "+" sign**
 2. Add marketplace source: `https://github.com/Creativestefan/mailbridge-mcp`
-3. Install **Mailbridge** from the list
-4. Start a new chat — the setup portal opens automatically if no account is connected
-5. To reopen setup at any time: **"open email setup"**
+3. Start a new chat — and enter `Open Mailbridge setup` to open the setup portal and connect your email account
+4. For **iCloud emails** you will need to create an [App specfic password](https://appleid.apple.com/) to access your email securely. Using your real password will fail to authenicate. 
+5. To reopen setup at any time: **"open Mailbridge setup"**
 
 **To update later:** Customize → Connectors → Browse Plugins → (...) button and Click Check for update
 
@@ -79,7 +79,7 @@ Use Mailbridge to check my email connection.
 4. If no account is connected yet:
 
 ```
-Open Mailbridge setup.
+Type "Open Mailbridge setup" and send.
 ```
 
 The setup portal saves credentials directly to your OS credential store (macOS Keychain, Windows Credential Manager, or Linux Keyring).
