@@ -1,6 +1,6 @@
 {
   "name": "mailbridge-mcp",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "mcpName": "io.github.Creativestefan/mailbridge",
   "description": "Connect your AI assistant to email — read, search, send, and organise via IMAP/SMTP",
   "type": "module",
@@ -8,6 +8,18 @@
   "bin": {
     "mailbridge-mcp": "index.js"
   },
+  "files": [
+    "index.js",
+    "setup.js",
+    "tools/",
+    "utils/",
+    "setup-ui/dist/",
+    "server.json",
+    "LICENSE",
+    "README.md",
+    "PRIVACY.md",
+    "TERMS.md"
+  ],
   "scripts": {
     "start": "node index.js"
   },
