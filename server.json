@@ -6,12 +6,12 @@
     "url": "https://github.com/Creativestefan/mailbridge-mcp",
     "source": "github"
   },
-  "version": "2.3.5",
+  "version": "2.3.6",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "mailbridge-mcp",
-      "version": "2.3.5",
+      "version": "2.3.6",
       "transport": {
         "type": "stdio"
       }
