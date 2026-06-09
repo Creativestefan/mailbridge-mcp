@@ -25,7 +25,7 @@ export async function getActiveAccount() {
 
   if (!config.active || !config.accounts[config.active]) {
     throw new Error(
-      'No email account connected. Run: node ~/.universal-email-mcp-setup.js'
+      'No email account connected. Ask your assistant to open the Mailbridge setup, or run: npx mailbridge-mcp'
     );
   }
 
@@ -34,7 +34,7 @@ export async function getActiveAccount() {
   const password = await getPassword(config.active);
   if (!password) {
     throw new Error(
-      `No password found for "${config.active}". Run: node ~/.universal-email-mcp-setup.js`
+      `No password found for account "${config.active}". Open Mailbridge setup to reconnect.`
     );
   }
 
