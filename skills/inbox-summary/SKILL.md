@@ -5,27 +5,47 @@ description: >
   "catch me up", "latest email updates", "what's in my inbox", "summarise my emails",
   "anything important?", "email digest", or any request for an overview of recent emails.
 metadata:
-  version: "1.0.0"
+  version: "2.5.0"
 ---
 
 Use `get_emails_with_preview` to fetch recent emails with body previews in one pass.
-Default to `limit: 50`. Then categorise and present a structured digest.
+Default to `limit: 50`. Each email in the response now includes `priority` (1–5) and `category` fields — use these directly rather than re-classifying manually.
+
+## Pre-Summary: Check Reminders
+
+Before presenting the digest, call `list_reminders`. If any reminders are overdue or due today, surface them first:
+
+```
+⏰ **Follow-up reminders due**
+- UID 123 (INBOX) — [note] · overdue
+- UID 88 (INBOX) — [note] · due today
+```
+
+Skip this block if `list_reminders` returns no active reminders.
 
 ## Categories
 
-Scan subject lines, senders, and previews to sort emails into:
+Map the `category` field from the tool response to digest sections:
 
-| Category | Signals |
+| Tool category | Digest section |
 |---|---|
-| 🔴 **Action Required** | "reply needed", "urgent", "ASAP", "deadline", "waiting on you", "please confirm", "invoice due", direct questions, your name in subject |
-| 💰 **Finance & Billing** | invoices, receipts, payments, subscriptions, renewals, bank alerts, "amount due", "payment received", "order confirmed" |
-| 📅 **Events & Calendar** | meeting invites, RSVPs, "you're invited", travel bookings, confirmations, event reminders |
-| 📦 **Updates & FYI** | newsletters, notifications, shipping updates, system alerts, social, low-priority |
+| `ActionRequired` | 🔴 Action Required |
+| `Finance` | 💰 Finance & Billing |
+| `Travel` or `Calendar` | 📅 Events & Calendar |
+| `Newsletter`, `Social`, `Updates` | 📦 Updates & FYI |
+
+Use the `priority` field to sort within sections — highest priority first.
+Emails with `priority ≥ 4` always appear in Action Required regardless of category.
+
+If your local rules (from `list_rules`) add overrides, apply them: a rule with `action_type: "priority"` bumps the score; `action_type: "category"` overrides the section; `action_type: "flag"` adds a tag next to the sender name.
 
 ## Output Format
 
 ```
 ## Your inbox — last [N] emails
+
+⏰ **Follow-up reminders due** (if any)
+- UID [x] — [note] · overdue
 
 ### 🔴 Action Required ([n])
 - **[Sender]** — [Subject] · [Date]
@@ -45,18 +65,18 @@ Scan subject lines, senders, and previews to sort emails into:
 ---
 ### 💡 I can help you
 - Reply to [sender] about [topic]
-- Pay or flag the invoice from [sender]
-- Add [event] to your calendar
-- Unsubscribe from [newsletter]
-- Archive all [n] newsletters
+- Unsubscribe from [newsletter] (say "unsubscribe from UID [x]")
+- Set a reminder on [email] for follow-up
+- Bulk archive the [n] newsletter emails
+- Extract the event details from [email]
 ```
 
 ## Rules
 
-- Lead with Action Required — always show this first even if empty
+- Lead with Action Required — always show this first, even if empty
 - Skip categories with zero emails
 - Keep each line tight — one sentence max per email
 - Dates: show as "Today", "Yesterday", or "Mon 9 Jun" — never full ISO timestamps
-- If preview is too short to categorise, use subject + sender alone
-- After the digest, always include the "I can help you" block with 3–5 specific suggestions based on what's actually in the inbox
+- If preview is too short to classify, use subject + sender alone
+- After the digest, always include the "I can help you" block with 3–5 specific, actionable suggestions based on what's actually in the inbox — mention unsubscribe, reminder, bulk actions when relevant
 - If the user wants to act on anything (reply, delete, open), use the appropriate mailbridge tool

@@ -15,6 +15,8 @@ import { registerSendTools } from './tools/send.js';
 import { registerManageTools } from './tools/manage.js';
 import { registerAccountTools } from './tools/accounts.js';
 import { registerAttachmentTools } from './tools/attachments.js';
+import { registerDraftTools, checkAndSendScheduled } from './tools/drafts.js';
+import { registerRuleTools } from './tools/rules.js';
 
 // Write a PID file so the session-start hook can restart this server
 // after an update, regardless of where the plugin is installed.
@@ -25,7 +27,7 @@ process.on('exit', cleanup);
 process.on('SIGTERM', () => { cleanup(); process.exit(0); });
 process.on('SIGINT', () => { cleanup(); process.exit(0); });
 
-const server = new McpServer({ name: 'mailbridge', version: '2.4.0' });
+const server = new McpServer({ name: 'mailbridge', version: '2.5.0' });
 
 registerStatusTools(server);
 registerReadTools(server);
@@ -33,9 +35,15 @@ registerSendTools(server);
 registerManageTools(server);
 registerAccountTools(server);
 registerAttachmentTools(server);
+registerDraftTools(server);
+registerRuleTools(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
+
+// Fire scheduled emails that are due — runs silently in the background.
+// Note: scheduled emails only send when a session is active (no persistent daemon).
+try { await checkAndSendScheduled(); } catch { /* non-fatal */ }
 
 // Auto-open setup portal on first run if no account is configured.
 // Works for any MCP client (Cowork handles this via its SessionStart hook,

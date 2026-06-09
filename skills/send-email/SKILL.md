@@ -4,8 +4,9 @@ description: >
   This skill should be used when the user says "send an email", "email [person]",
   "write an email to", "reply to this email", "respond to UID [n]", "draft a message",
   or asks me to compose and send any email message.
+  For saving drafts or scheduling, use the draft-email skill.
 metadata:
-  version: "2.0.0"
+  version: "2.5.0"
 ---
 
 Use the `mailbridge` MCP tools to compose and send emails.
@@ -25,10 +26,12 @@ Subject: Your subject
 ---
 Body of the email...
 ---
-Send this? (yes / edit)
+Send this? (yes / edit / save as draft)
 ```
 
-Only call `send_email` after the user confirms.
+- If the user says **yes/send** → call `send_email`
+- If the user says **save as draft** → use the draft-email skill: call `save_draft`
+- If the user says **schedule** → use the draft-email skill: call `schedule_email`
 
 ## Replying to an Email
 
