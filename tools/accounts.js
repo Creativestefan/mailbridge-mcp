@@ -107,13 +107,31 @@ export function registerAccountTools(server) {
       if (!config.accounts[name]) {
         return { content: [{ type: 'text', text: `Account "${name}" not found` }] };
       }
-      if (config.active === name) {
-        return { content: [{ type: 'text', text: `Cannot remove the active account. Switch to another account first.` }] };
+
+      const isActive = config.active === name;
+      const remaining = Object.keys(config.accounts).filter(k => k !== name);
+
+      if (isActive) {
+        if (remaining.length === 0) {
+          // Last account — clear everything
+          config.active = null;
+        } else {
+          // Auto-switch to the next available account
+          config.active = remaining[0];
+        }
       }
+
       delete config.accounts[name];
       saveConfig(config);
       await deletePassword(name);
-      return { content: [{ type: 'text', text: `Account "${name}" removed from config and credential store` }] };
+
+      const followUp = isActive && remaining.length > 0
+        ? ` Switched active account to "${config.active}".`
+        : isActive
+        ? ' No accounts remaining.'
+        : '';
+
+      return { content: [{ type: 'text', text: `Account "${name}" removed from config and credential store.${followUp}` }] };
     }
   );
 

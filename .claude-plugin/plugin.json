@@ -1,6 +1,6 @@
 {
   "name": "mailbridge",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Connect Claude to your email — read, search, send, reply, and organise emails from iCloud or any IMAP account. Credentials stored securely in your OS credential store (Keychain, Credential Manager, or Keyring).",
   "author": {
     "name": "Stephen J.",

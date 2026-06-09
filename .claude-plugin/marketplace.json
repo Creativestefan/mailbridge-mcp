@@ -10,7 +10,7 @@
     {
       "name": "mailbridge",
       "description": "Connect your AI assistant to your email inbox. Read, search, send, reply, organise emails and read attachments. Smart inbox digest with priorities, finance, events and action suggestions. Credentials stored securely in your OS keychain.",
-      "version": "2.3.3",
+      "version": "2.3.4",
       "author": {
         "name": "Stephen J.",
         "url": "https://github.com/Creativestefan"
