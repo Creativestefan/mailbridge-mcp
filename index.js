@@ -9,7 +9,7 @@ import { registerManageTools } from './tools/manage.js';
 import { registerAccountTools } from './tools/accounts.js';
 import { registerAttachmentTools } from './tools/attachments.js';
 
-const server = new McpServer({ name: 'mailbridge', version: '2.3.1' });
+const server = new McpServer({ name: 'mailbridge', version: '2.3.2' });
 
 registerStatusTools(server);
 registerReadTools(server);
