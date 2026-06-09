@@ -3,7 +3,12 @@
   "version": "2.3.0",
   "description": "Connect Claude to your email — read, search, send, reply, and organise emails from iCloud or any IMAP account. Credentials stored securely in your OS credential store (Keychain, Credential Manager, or Keyring).",
   "author": {
-    "name": "Stephen J."
+    "name": "Stephen J.",
+    "url": "https://github.com/Creativestefan"
   },
-  "keywords": ["email", "imap", "smtp", "inbox", "icloud", "cpanel", "mailbridge"]
+  "homepage": "https://github.com/Creativestefan/mailbridge-mcp",
+  "repository": "https://github.com/Creativestefan/mailbridge-mcp",
+  "support": "https://github.com/Creativestefan/mailbridge-mcp/issues",
+  "license": "MIT",
+  "keywords": ["email", "imap", "smtp", "inbox", "icloud", "mailbridge", "attachments"]
 }
