@@ -73,10 +73,6 @@ codex plugin add mailbridge@mailbridge
 
 ### Via npm (any MCP client)
 
-```bash
-npx mailbridge-mcp
-```
-
 Add to your MCP client config (e.g. `claude_desktop_config.json`):
 
 ```json
@@ -89,6 +85,10 @@ Add to your MCP client config (e.g. `claude_desktop_config.json`):
   }
 }
 ```
+
+On first start, if no account is configured, the setup portal opens automatically in your browser. Fill in your email details — credentials are saved directly to your OS credential store and the portal closes. You only need to do this once.
+
+To reopen setup at any time, ask your assistant: **"open email setup"**
 
 ---
 

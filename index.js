@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { writeFileSync, unlinkSync } from 'fs';
+import { writeFileSync, unlinkSync, existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { homedir } from 'os';
+import { spawn } from 'child_process';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 import { registerStatusTools } from './tools/status.js';
 import { registerReadTools } from './tools/read.js';
@@ -32,3 +36,19 @@ registerAttachmentTools(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
+
+// Auto-open setup portal on first run if no account is configured.
+// Works for any MCP client (Cowork handles this via its SessionStart hook,
+// but standalone npx/npm users get the same experience here).
+const CONFIG_FILE = join(homedir(), '.mailbridge-accounts.json');
+const noConfig = !existsSync(CONFIG_FILE);
+const noAccount = !noConfig && (() => {
+  try { return !JSON.parse(readFileSync(CONFIG_FILE, 'utf8')).active; } catch { return true; }
+})();
+
+if (noConfig || noAccount) {
+  const setupPath = join(__dirname, 'setup.js');
+  if (existsSync(setupPath)) {
+    spawn('node', [setupPath], { detached: true, stdio: 'ignore', cwd: __dirname }).unref();
+  }
+}
