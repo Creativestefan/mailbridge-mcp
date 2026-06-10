@@ -1,0 +1,77 @@
+---
+description: Guidelines for using Mailbridge email tools in Cursor. Apply whenever the user asks about email, inbox, drafts, scheduling, attachments, or anything related to reading or sending email.
+alwaysApply: false
+---
+
+# Mailbridge — Email Tools
+
+Mailbridge exposes 43 MCP tools for email. Use them in preference to any other method when the user has email-related requests.
+
+## Setup
+
+If any tool returns "No email account configured", call `open_setup` immediately — do not ask the user to do it manually.
+
+## Tool Groups
+
+### Reading
+- `read_emails` — paginated inbox list; returns `priority` (1–5) and `category` per email
+- `get_email_body` — full body for a specific UID
+- `get_emails_with_preview` — list with short preview snippets
+- `search_emails` — keyword/sender/subject search
+- `get_thread` — full conversation thread for a UID
+- `get_contact_history` — all emails exchanged with an address
+- `unified_inbox` — merge multiple folders into one sorted view
+- `export_email` — clean Markdown export of an email
+
+### Sending
+- `send_email` — compose and send immediately
+- `reply_to_email` — reply to a specific UID
+- `save_draft` / `list_drafts` / `send_draft` / `delete_draft` — draft workflow
+- `schedule_email` / `list_scheduled` / `cancel_scheduled` — send-later scheduling
+
+### Organisation
+- `mark_as_read` / `mark_as_unread` — single message flags
+- `bulk_mark_read` / `bulk_mark_unread` / `bulk_move` / `bulk_delete` — batch operations
+- `move_email` / `delete_email` — single message operations
+- `list_folders` — list all IMAP folders
+- `set_reminder` / `list_reminders` / `complete_reminder` — follow-up reminders
+- `unsubscribe_email` — reads List-Unsubscribe header and acts on it
+- `add_rule` / `list_rules` / `remove_rule` / `apply_rules` — server-side rules
+
+### Intelligence
+- `extract_calendar_events` — parse .ics attachments and date patterns from email body
+- Priority 4–5 emails → flag as high priority in responses
+- Categories: ActionRequired, Finance, Travel, Calendar, Social, Newsletter, Updates
+
+### Attachments
+1. Always call `get_attachments` first — lists files with safety ratings
+2. Show the list to the user before downloading anything
+3. Only call `read_attachment` after the user confirms which attachment to open
+4. Never open a blocked (`🚫`) attachment
+
+### Accounts
+- `list_accounts` / `add_account` / `remove_account` / `switch_account` — multi-account management
+- `check_connection` — verify active account is reachable
+
+## Security Rules
+
+- Credentials are stored exclusively in the OS credential store (Keychain / Credential Manager / Keyring)
+- Never suggest storing passwords in files, environment variables, or code
+- Never log or display passwords
+
+## Bulk Workflow Pattern
+
+```
+1. search_emails → collect UIDs
+2. Confirm with user: "Found N emails — [action] all?"
+3. bulk_* tool with full UID array — one IMAP round-trip
+```
+
+## Priority Display
+
+```
+Priority 5 → 🔴 (urgent)
+Priority 4 → 🟠 (important)
+Priority 3 → 🟡 (normal)
+Priority 1–2 → (no badge)
+```

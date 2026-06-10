@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mailbridge": {
+      "command": "npx",
+      "args": ["-y", "mailbridge-mcp@latest"]
+    }
+  }
+}

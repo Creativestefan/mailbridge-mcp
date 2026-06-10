@@ -1,0 +1,13 @@
+{
+  "name": "mailbridge",
+  "displayName": "Mailbridge",
+  "version": "2.5.2",
+  "description": "Connect Cursor to your email — read, search, send, reply, organise, draft, and schedule emails from iCloud or any IMAP account. Credentials stored securely in the OS credential store.",
+  "author": {
+    "name": "Stephen J.",
+    "email": "stefan@windwire.studio"
+  },
+  "license": "MIT",
+  "keywords": ["email", "imap", "smtp", "inbox", "icloud", "mailbridge", "attachments"],
+  "logo": "assets/logo.png"
+}

@@ -93,6 +93,35 @@ codex plugin add mailbridge@mailbridge
 
 ---
 
+### Cursor
+
+1. Open **Cursor Settings → Tools & MCP**
+2. Click **Add MCP Server** and paste:
+
+```json
+{
+  "mcpServers": {
+    "mailbridge": {
+      "command": "npx",
+      "args": ["-y", "mailbridge-mcp@latest"]
+    }
+  }
+}
+```
+
+3. Fully quit and reopen Cursor (MCP servers only load at startup)
+4. Start a new chat and test:
+
+```
+Use Mailbridge to check my email connection.
+```
+
+If no account is connected yet, the setup portal opens automatically — or ask: **"open email setup"**.
+
+**To update later:** bump the version tag in your config to `mailbridge-mcp@latest` — it always pulls the newest release.
+
+---
+
 ### Via npm (any MCP client)
 
 Add to your MCP client config (e.g. `claude_desktop_config.json`):
