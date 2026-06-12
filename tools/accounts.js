@@ -4,6 +4,7 @@ import { savePassword, deletePassword } from '../utils/keychain.js';
 import { spawn } from 'child_process';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { SETUP_URL } from '../utils/setup-config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -181,7 +182,12 @@ export function registerAccountTools(server) {
         stdio: 'ignore',
         cwd: join(__dirname, '..')
       }).unref();
-      return { content: [{ type: 'text', text: 'Opening Mailbridge setup portal in your browser. Fill in your email details and click Connect.' }] };
+      return {
+        content: [{
+          type: 'text',
+          text: `Opening the Mailbridge setup portal in your browser. Fill in your email details and click Connect.\n\nIf the browser didn't open automatically, go to this address manually:\n${SETUP_URL}`
+        }]
+      };
     }
   );
 }

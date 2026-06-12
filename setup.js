@@ -14,6 +14,7 @@ import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
 import { ImapFlow } from 'imapflow';
 import keytar from 'keytar';
+import { SETUP_PORT, SETUP_URL } from './utils/setup-config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -23,10 +24,10 @@ const CONFIG_PATH = join(homedir(), '.mailbridge-accounts.json');
 const DIST_PATH = existsSync(join(__dirname, 'setup-ui', 'dist'))
   ? join(__dirname, 'setup-ui', 'dist')
   : join(__dirname, '..', 'setup-ui', 'dist');
-const PORT = 52693;
+const PORT = SETUP_PORT;
 
 function openBrowser() {
-  const url = `http://127.0.0.1:${PORT}`;
+  const url = SETUP_URL;
   const openCmd = platform() === 'win32' ? 'start' : platform() === 'darwin' ? 'open' : 'xdg-open';
   try { execSync(`${openCmd} "${url}"`); } catch { /* ignore — browser open is best-effort */ }
 }

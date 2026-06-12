@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { createImapClient } from '../utils/imap.js';
 import { createTransporter } from '../utils/smtp.js';
 import { getActiveAccount } from '../utils/accounts.js';
+import { receiptHeaders, recordTrackedSend } from './receipts.js';
 
 export function registerSendTools(server) {
   server.tool(
@@ -12,21 +13,26 @@ export function registerSendTools(server) {
       subject: z.string(),
       body: z.string(),
       cc: z.string().optional(),
-      bcc: z.string().optional()
+      bcc: z.string().optional(),
+      request_receipt: z.boolean().optional()
     },
     { destructiveHint: true },
-    async ({ to, subject, body, cc, bcc }) => {
+    async ({ to, subject, body, cc, bcc, request_receipt }) => {
       const account = await getActiveAccount();
       const transporter = await createTransporter();
-      await transporter.sendMail({
+      const message = {
         from: account.smtp.user,
         to,
         cc,
         bcc,
         subject,
         text: body
-      });
-      return { content: [{ type: 'text', text: `Email sent to ${to}` }] };
+      };
+      if (request_receipt) message.headers = receiptHeaders(account);
+      const info = await transporter.sendMail(message);
+      if (request_receipt) recordTrackedSend({ messageId: info.messageId, to, subject });
+      const note = request_receipt ? ' (read receipt requested)' : '';
+      return { content: [{ type: 'text', text: `Email sent to ${to}${note}` }] };
     }
   );
 
@@ -36,10 +42,11 @@ export function registerSendTools(server) {
     {
       uid: z.number(),
       body: z.string(),
-      folder: z.string().default('INBOX')
+      folder: z.string().default('INBOX'),
+      request_receipt: z.boolean().optional()
     },
     { destructiveHint: true },
-    async ({ uid, body, folder }) => {
+    async ({ uid, body, folder, request_receipt }) => {
       const client = await createImapClient();
       await client.connect();
       await client.mailboxOpen(folder);
@@ -59,16 +66,20 @@ export function registerSendTools(server) {
 
       const account = await getActiveAccount();
       const transporter = await createTransporter();
-      await transporter.sendMail({
+      const message = {
         from: account.smtp.user,
         to: replyTo,
         subject,
         text: body,
         references: messageId,
         inReplyTo: messageId
-      });
+      };
+      if (request_receipt) message.headers = receiptHeaders(account);
+      const info = await transporter.sendMail(message);
+      if (request_receipt) recordTrackedSend({ messageId: info.messageId, to: replyTo, subject });
 
-      return { content: [{ type: 'text', text: `Reply sent to ${replyTo}` }] };
+      const note = request_receipt ? ' (read receipt requested)' : '';
+      return { content: [{ type: 'text', text: `Reply sent to ${replyTo}${note}` }] };
     }
   );
 }

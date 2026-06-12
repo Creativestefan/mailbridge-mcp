@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Connect Cursor to your email via IMAP/SMTP",
-    "version": "2.5.2"
+    "version": "2.6.0"
   },
   "plugins": [
     {

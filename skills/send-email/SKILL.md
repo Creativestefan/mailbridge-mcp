@@ -6,7 +6,7 @@ description: >
   or asks me to compose and send any email message.
   For saving drafts or scheduling, use the draft-email skill.
 metadata:
-  version: "2.5.0"
+  version: "2.6.0"
 ---
 
 Use the `mailbridge` MCP tools to compose and send emails.
@@ -18,6 +18,7 @@ Call `send_email` with:
 - `subject` — subject line
 - `body` — plain text body
 - `cc` / `bcc` — optional
+- `request_receipt` — set `true` if the user wants to know when the email is opened (see Read Receipts below)
 
 **Always confirm before sending.** Show the draft first:
 ```
@@ -43,6 +44,15 @@ If the user wants to reply to an existing message, use `reply_to_email` with:
 The tool automatically sets `Re:` prefix and threading headers.
 
 Same confirmation step applies before sending.
+
+`reply_to_email` also accepts `request_receipt` — same behaviour as `send_email`.
+
+## Read Receipts
+
+If the user asks to "track this", "know when they open it", or "request a read receipt", set `request_receipt: true` on `send_email` or `reply_to_email`. Then, to check status later, use the **track-opens** skill (`check_email_opens`).
+
+**Be honest about how this works** — do not over-promise:
+> "I've requested a read receipt. Note this only works if the recipient's email app supports receipts and they agree to send one — Gmail's web app, for example, ignores it. So if no confirmation comes back, it doesn't mean they didn't read it."
 
 ## Drafting Tips
 

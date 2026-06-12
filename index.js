@@ -17,6 +17,7 @@ import { registerAccountTools } from './tools/accounts.js';
 import { registerAttachmentTools } from './tools/attachments.js';
 import { registerDraftTools, checkAndSendScheduled } from './tools/drafts.js';
 import { registerRuleTools } from './tools/rules.js';
+import { registerReceiptTools } from './tools/receipts.js';
 
 // Write a PID file so the session-start hook can restart this server
 // after an update, regardless of where the plugin is installed.
@@ -27,7 +28,7 @@ process.on('exit', cleanup);
 process.on('SIGTERM', () => { cleanup(); process.exit(0); });
 process.on('SIGINT', () => { cleanup(); process.exit(0); });
 
-const server = new McpServer({ name: 'mailbridge', version: '2.5.2' });
+const server = new McpServer({ name: 'mailbridge', version: '2.6.0' });
 
 registerStatusTools(server);
 registerReadTools(server);
@@ -37,6 +38,7 @@ registerAccountTools(server);
 registerAttachmentTools(server);
 registerDraftTools(server);
 registerRuleTools(server);
+registerReceiptTools(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

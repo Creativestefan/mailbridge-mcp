@@ -22,6 +22,7 @@ Credentials are stored securely in your OS credential store (macOS Keychain, Win
 - **Send & reply** — compose new emails or reply with threading
 - **Smart drafts** — save emails locally for review before sending
 - **Email scheduling** — schedule emails to send at a future time
+- **Read receipts** — optionally request confirmation when a sent email is opened (recipient-dependent; see [Read Receipts](#read-receipts))
 
 ### Organisation
 - **Bulk actions** — mark, move, or delete multiple emails in one command
@@ -199,6 +200,8 @@ Use your full email address and password. The mail server is usually `mail.yourd
 | `schedule_email` | Schedule an email for future delivery |
 | `list_scheduled` | List pending scheduled emails |
 | `cancel_scheduled` | Cancel a scheduled email |
+| `check_email_opens` | Scan the inbox for read-receipt confirmations and report opens |
+| `list_tracked_emails` | Show tracked emails and their open status (no inbox scan) |
 
 ### Organisation
 
@@ -265,6 +268,27 @@ Schedule an email for later:
 > "Send this to john@example.com tomorrow at 9am"
 
 Scheduled emails fire automatically on the next session start after the scheduled time.
+
+---
+
+## Read Receipts
+
+Ask Mailbridge to track when a sent email is opened:
+
+> "Send this to john@example.com and let me know when he opens it"
+
+This sets `request_receipt: true`, which adds standard **read-receipt headers (RFC 8098 / MDN)** to the message. Later:
+
+> "Did John open my email?"
+
+runs `check_email_opens`, which scans your inbox for the recipient's confirmation and reports who opened it and when.
+
+**How it actually works — and its limits:**
+
+- Mailbridge uses **read-receipt headers, not tracking pixels**. Nothing phones home to any server; the recipient's mail app asks *them* to confirm, and the confirmation comes back as a normal email that Mailbridge reads locally.
+- A receipt only arrives if the recipient's client **supports** read receipts **and** the recipient **agrees** to send one. Apple Mail and Thunderbird prompt for this; **Gmail's web app ignores it**.
+- **No receipt does not mean the email was unread.** An "awaiting" status simply means no confirmation has come back — it is not proof of anything.
+- This is intentionally the privacy-respecting approach: no invisible pixels, no third-party trackers, no data leaving your device.
 
 ---
 
