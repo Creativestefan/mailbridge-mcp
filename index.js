@@ -19,6 +19,19 @@ import { registerDraftTools, checkAndSendScheduled } from './tools/drafts.js';
 import { registerRuleTools } from './tools/rules.js';
 import { registerReceiptTools } from './tools/receipts.js';
 
+// Keep the connector alive. A transient IMAP/socket error (e.g. iCloud dropping
+// an idle connection, which emits an unhandled 'error' event) must NEVER crash
+// the whole MCP server — if the process dies, the host tears down and restarts
+// the connection, which the user sees as the connector "flapping" between
+// connected and reconnecting. Log to stderr (never stdout — that carries the
+// JSON-RPC protocol) and keep running.
+process.on('uncaughtException', (err) => {
+  try { console.error('[mailbridge] uncaughtException:', err?.stack || err); } catch { /* ignore */ }
+});
+process.on('unhandledRejection', (err) => {
+  try { console.error('[mailbridge] unhandledRejection:', err?.stack || err); } catch { /* ignore */ }
+});
+
 // Write a PID file so the session-start hook can restart this server
 // after an update, regardless of where the plugin is installed.
 const PID_FILE = join(homedir(), '.mailbridge-server.pid');
