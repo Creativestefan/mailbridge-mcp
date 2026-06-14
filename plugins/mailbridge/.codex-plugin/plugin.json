@@ -1,6 +1,6 @@
 {
   "name": "mailbridge",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Connect Codex to your email: read, search, send, reply, and organise emails from iCloud or any IMAP account. Credentials are stored securely in your OS credential store.",
   "author": {
     "name": "Stephen J.",

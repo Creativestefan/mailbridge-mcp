@@ -1,6 +1,6 @@
 {
   "name": "mailbridge-mcp",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "mcpName": "io.github.Creativestefan/mailbridge",
   "description": "Connect your AI assistant to email — read, search, send, and organise via IMAP/SMTP",
   "type": "module",
@@ -47,7 +47,7 @@
     "keytar": "^7.9.0",
     "mammoth": "^1.12.0",
     "nodemailer": "^8.0.10",
-    "pdf-parse": "^2.4.5",
+    "unpdf": "^1.6.2",
     "zod": "^3.0.0"
   }
 }

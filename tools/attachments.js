@@ -219,12 +219,15 @@ export function registerAttachmentTools(server) {
         return { content: [{ type: 'text', text: `**${filename}**\n\n${buffer.toString('utf8')}` }] };
       }
 
-      // PDF
+      // PDF — uses unpdf (canvas-free serverless pdfjs; no native deps, keeps
+      // the connector's cold-start small so Cowork VM respawns stay fast).
       if (mimeType === 'application/pdf') {
         try {
-          const pdfParse = (await import('pdf-parse/lib/pdf-parse.js')).default;
-          const data = await pdfParse(buffer);
-          return { content: [{ type: 'text', text: `**${filename}** (${data.numpages} page${data.numpages !== 1 ? 's' : ''})\n\n${data.text.trim()}` }] };
+          const { extractText, getDocumentProxy } = await import('unpdf');
+          const pdf = await getDocumentProxy(new Uint8Array(buffer));
+          const { totalPages, text } = await extractText(pdf, { mergePages: true });
+          const out = (Array.isArray(text) ? text.join('\n') : text).trim();
+          return { content: [{ type: 'text', text: `**${filename}** (${totalPages} page${totalPages !== 1 ? 's' : ''})\n\n${out}` }] };
         } catch (err) {
           return { content: [{ type: 'text', text: `Could not extract text from "${filename}": ${err.message}` }] };
         }
